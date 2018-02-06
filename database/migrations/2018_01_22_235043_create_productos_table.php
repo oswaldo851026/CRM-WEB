@@ -20,11 +20,12 @@ class CreateProductosTable extends Migration
             $table->string('descripcion', 250);
             $table->integer('id_proveedor')->nullable();
             $table->float('precio');
+            $table->integer('existencias')->nullable();;
             $table->string('codigo_barras', 250)->nullable();
             $table->longText('comentarios')->nullable();
             $table->string('imagen_principal', 250)->nullable();
             $table->string('tipo_producto', 250)->nullable();
-            $table->integer("id_categoria");
+            $table->integer("id_categoria")->nullable();
             $table->timestamps();
         });
     }

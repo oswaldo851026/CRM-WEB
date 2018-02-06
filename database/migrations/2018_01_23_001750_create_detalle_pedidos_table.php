@@ -18,11 +18,11 @@ class CreateDetallePedidosTable extends Migration
             $table->timestamps();
             $table->integer('id_pedido');
             $table->integer('id_producto');
-            $table->string('nombre_producto', 250);
-            $table->string('descripcion_producto', 250);
-            $table->string('cantidad_producto', 250);
-            $table->float('precio_producto');
-            $table->float('importe');
+            $table->string('nombre_producto', 250)->nullable();
+            $table->string('descripcion_producto', 250)->nullable();
+            $table->string('cantidad_producto', 250)->nullable();
+            $table->float('precio_producto')->nullable();
+            $table->float('importe')->nullable();
 
 
 

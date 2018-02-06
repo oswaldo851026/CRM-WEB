@@ -21,7 +21,6 @@ class CreateDetalleOrdenesComprasTable extends Migration
             $table->string('nombre_producto', 250);
             $table->string('descripcion_producto', 250);
             $table->string('cantidad_producto', 250);
-          
             $table->float('precio_producto');
             $table->float('importe');
         });
