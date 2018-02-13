@@ -111,10 +111,19 @@ class UsuariosController extends Controller
      * @param  \App\Usuarios  $usuarios
      * @return \Illuminate\Http\Response
      */
-    public function show(Usuarios $usuarios)
+    public function show($id)
     {
         
+     if (Sentry::check()){ 
+     $idusuario = Sentry::getUser()->id;
+     $perfiles = DB::table('perfiles')->get();
+     $editar_user = User::findOrFail($id);
+     return view('user.view',['perfiles'=>$perfiles, 'idusuario'=>$idusuario, 'user'=>$editar_user]);
 
+     } else {
+
+        return View('sentinel.sessions.login');
+     }
 
     }
 
@@ -182,8 +191,18 @@ class UsuariosController extends Controller
      * @param  \App\Usuarios  $usuarios
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Usuarios $usuarios)
+    public function destroy($id)
+    
     {
-        //
+        if (Sentry::check()){ 
+     $user = User::findOrFail($id);
+     if ($user->delete()) {
+        return redirect("user")->with(['mensaje_eliminarUsuario', 'Un usuario ha sido eliminado']);
+      } else {
+
+      return redirect("user")->with('mensaje_eliminarUsuario', 'El usuario no pudo ser eliminado');
+    }
+
+   }
     }
 }

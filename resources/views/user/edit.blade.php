@@ -82,7 +82,6 @@
 			<label for="proveedor" class="col-lg-10">Rol</label>
 			<select required type="text" tabindex="4" name="id_perfil" id= 'id_perfil' class="form-control"  >
             <option value= "">Eliga una opción</option>
-             <?php  $selected = "" ?>
             @foreach ($perfiles as $row)
             <?php $selected = ""; if($user->id_perfil == $row->id) {$selected = "selected";} ?>
 		    <option {{$selected}} value= {{$row->id}}>{{$row->nombre}}</option>
