@@ -22,7 +22,10 @@ class CreateMateriaPrimasTable extends Migration
             $table->integer('id_proveedor')->nullable();
             $table->float('costo');
             $table->longText('comentarios')->nullable();
-            $table->string('imagen_principal', 250)->nullable();
+           
+            $table->string('medida', 250)->nullable();
+            $table->integer('existencias')->nullable();
+
             $table->integer("id_categoria")->nullable();
             $table->timestamps();
         });

@@ -24,7 +24,7 @@
 </head>
 <body>
     <div id="app">
-        <nav class="navbar navbar-default navbar-static-top">
+        <nav class="navbar navbar-inverse navbar-static-top">
             <div class="container">
                 <div class="navbar-header">
 
@@ -36,19 +36,57 @@
                         <span class="icon-bar"></span>
                     </button>
 
-                    <!-- Branding Image -->
-                    <a class="navbar-brand" href="{{ url('/') }}">
-                        {{ config('app.name', 'Laravel') }}
-                    </a>
+                  
+                    
                 </div>
 
                 <div class="collapse navbar-collapse" id="app-navbar-collapse">
                     <!-- Left Side Of Navbar -->
                     <ul class="nav navbar-nav">
                         &nbsp;
+                        <li class="nav-item dropdown">
+    <a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">Activos <span class="caret"></span></a>
+    <div class="dropdown-menu">
+      
+      <a  href="productos">Productos</a>
+      <a  href="materiaprima">Materia Prima</a>
+      <a  href="Categorias">Categoria</a>
+     
+    </div>
+  </li>
+   <li class="nav-item dropdown">
+    <a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">Usuario<span class="caret"></span></a>
+    <div class="dropdown-menu">
+      <a class="dropdown-item" href="{{ url('user') }}">Usuario</a>
+      <a class="dropdown-item" href="{{ url('/perfiles') }}">Perfiles</a>
+     
+     
+    </div>
+  </li>
+     <li class="nav-item dropdown">
+    <a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">Ventas<span class="caret"></span></a>
+    <div class="dropdown-menu">
+      <a class="dropdown-item" href="{{ url('/pedidos') }}">Pedidos</a>
+     
+     
+    </div>
+  </li>
+  <li><a href="#">Clientes</a></li>
+  <li><a href="#">Proveedores</a></li>
+         <li class="nav-item dropdown">
+    <a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">Inventarios<span class="caret"></span></a>
+    <div class="dropdown-menu">
+      <a  href="{{ url('usuario') }}">Ineventarios</a>
+      <a  href="{{ url('/perfiles') }}">Almacenes</a>
+     
+     
+    </div>
+  </li>
+
                     </ul>
 
                     <!-- Right Side Of Navbar -->
+
                     <ul class="nav navbar-nav navbar-right">
                         <!-- Authentication Links -->
                         @if (Auth::guest())
@@ -62,10 +100,10 @@
 
                                 <ul class="dropdown-menu" role="menu">
                                     <li>
-                                        <a href="{{ url('/logout') }}"
+                                        <a href="{{ url('../Tecnologias') }}"
                                             onclick="event.preventDefault();
                                                      document.getElementById('logout-form').submit();">
-                                            Logout
+                                            Salir
                                         </a>
 
                                         <form id="logout-form" action="{{ url('/logout') }}" method="POST" style="display: none;">

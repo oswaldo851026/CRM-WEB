@@ -19,5 +19,6 @@ Route::get('/', array('as' => 'login', function()
 }));
 
 Route::resource('productos','ProductosController');
+Route::resource('materiaprima','MateriaPrimaController');
 Route::resource('user','UsuariosController');
 Route::get('/productos',array('as' => 'home','uses'=>'ProductosController@index')); //ruta de inicio

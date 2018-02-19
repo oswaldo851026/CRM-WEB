@@ -1,5 +1,4 @@
 
-
  
 
 <head>
@@ -17,7 +16,7 @@
 
 		<div class="col-xs-12 ">
 			<br>
-			<h2>Ver Producto</h2>
+			<h2>Ver Materia Prima</h2>
 			<br>
 		</div>
 
@@ -33,7 +32,7 @@
 		<div class="col-xs-6">
 			<div class="form-group" >
 			<div class="col-lg-12">
-			<label for="nombre" class="col-lg-10">*Nombre del producto</label>
+			<label for="nombre" class="col-lg-10">*Nombre de la Materia prima</label>
 			<input  readonly type="text" tabindex="1" name="nombre" id= 'nombre' class="form-control" placeholder="Primer nombre" required> <br/>
 			</div>
 			</div>
@@ -47,7 +46,7 @@
 			
 			<div class="form-group" >
 			<div class="col-lg-12">
-			<label for="precio" class="col-lg-10">Precio</label>
+			<label for="precio" class="col-lg-10">Costo</label>
 			<input readonly type="number" tabindex="5" name="precio" id= 'precio' class="form-control" placeholder="precio" > <br/>
 			</div>
 			</div>
