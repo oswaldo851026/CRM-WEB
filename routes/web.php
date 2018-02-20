@@ -11,6 +11,14 @@
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
-});
+
+
+Route::get('/', array('as' => 'login', function()
+{
+    return View::make('sentinel/sessions/login');
+}));
+
+Route::resource('productos','ProductosController');
+Route::resource('materiaprima','MateriaPrimaController');
+Route::resource('user','UsuariosController');
+Route::get('/productos',array('as' => 'home','uses'=>'ProductosController@index')); //ruta de inicio
