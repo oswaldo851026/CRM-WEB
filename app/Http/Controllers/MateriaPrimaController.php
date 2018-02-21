@@ -35,7 +35,7 @@ class MateriaPrimaController extends Controller
             $materiaprima = Materia_prima::paginate($perPage);
         }
 
-        return view ('materiaprima.index', compact('materiaprima'));
+        return view ('materiaprima.index', ['materiaprima'=>$materiaprima]);
     }
 
     
@@ -87,8 +87,9 @@ class MateriaPrimaController extends Controller
      */
     public function show($id)
     {
-        $promotore = MateriaPrima::findOrFail($id);
-
+        $materiasprimas = Materia_prima::findOrFail($id);
+          $categorias = DB::table('categorias')->get();
+          $proveedores = DB::table('proveedores')->get();
         return view('materiaprima.show', compact('MateriaPrima'));
     }
 
@@ -100,9 +101,16 @@ class MateriaPrimaController extends Controller
      */
     public function edit($id)
     {
-        $Materia_prima = MateriaPrima::findOrFail($id);
+         if (Sentry::check()){ 
+     $idusuario = Sentry::getUser()->id;
 
-        return view('materiaprima.edit', compact('MateriaPrima'));
+        $materiasprimas = Materia_prima::findOrFail($id);
+  $categorias = DB::table('categorias')->get();
+          $proveedores = DB::table('proveedores')->get();
+
+
+        return view('materiaprima.edit', ["materiasprimas"=>$materiasprimas, "idusuario" => $idusuario, 'categorias'=>$categorias, 'proveedores'=>$proveedores]);
+    }
     }
 
     /**
@@ -114,12 +122,19 @@ class MateriaPrimaController extends Controller
      */
     public function update(Request $request, $id)
     {
-         $requestData = $request->all();
+         $materiasprimas = $request->all();
         
-        $MateriaPrima = MateriaPrima::findOrFail($id);
-        $MateriaPrima->update($requestData);
+        $materiasprimas = Materia_prima::findOrFail($id);
+        $materiasprimas->update($materiasprimas);
 
-        return redirect('materiaprima')->with('flash_message', 'materia prima actualizado!');
+        // return redirect('materiaprima')->with('flash_message', 'materia prima actualizado!');
+        if($materiasprimas->update($request->all())){
+          session()->flash('crearProducto', "Un producto ha sido editado");
+          return redirect("materiaprima");
+      }else{
+          return view('materiaprima.edit',["materias_primas"=>$materiasprimas]);
+        
+      }
     }
 
     /**
@@ -130,7 +145,7 @@ class MateriaPrimaController extends Controller
      */
     public function destroy($id)
     {
-         MateriaPrima::destroy($id);
+         Materia_prima::destroy($id);
 
         return redirect('materiaprima')->with('flash_message', 'materia prima Borrado!');
     }

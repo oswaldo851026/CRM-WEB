@@ -44,44 +44,76 @@
                     <!-- Left Side Of Navbar -->
                     <ul class="nav navbar-nav">
                         &nbsp;
-                        <li class="nav-item dropdown">
-    <a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">Activos <span class="caret"></span></a>
-    <div class="dropdown-menu">
-      
-      <a  href="productos">Productos</a>
-      <a  href="materiaprima">Materia Prima</a>
-      <a  href="Categorias">Categoria</a>
-     
-    </div>
+    <li class="dropdown">
+        <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+          Activos <b class="caret"></b>
+        </a>
+        <ul class="dropdown-menu">
+          <li><a href="{{ url('productos') }}">Productos</a></li>
+          <li class="divider"></li>
+          <li><a href="{{ url('materiaprima') }}">Materia prima</a></li>
+          <li class="divider"></li>
+          <li><a href="{{ url('categorias ') }}">Categoria</a></li>
+          
+          
+        </ul>
+      </li>
   </li>
-   <li class="nav-item dropdown">
-    <a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">Usuario<span class="caret"></span></a>
-    <div class="dropdown-menu">
-      <a class="dropdown-item" href="{{ url('user') }}">Usuario</a>
-      <a class="dropdown-item" href="{{ url('/perfiles') }}">Perfiles</a>
-     
-     
-    </div>
-  </li>
-     <li class="nav-item dropdown">
-    <a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">Ventas<span class="caret"></span></a>
-    <div class="dropdown-menu">
-      <a class="dropdown-item" href="{{ url('/pedidos') }}">Pedidos</a>
-     
-     
-    </div>
-  </li>
-  <li><a href="#">Clientes</a></li>
-  <li><a href="#">Proveedores</a></li>
-         <li class="nav-item dropdown">
-    <a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">Inventarios<span class="caret"></span></a>
-    <div class="dropdown-menu">
-      <a  href="{{ url('usuario') }}">Ineventarios</a>
-      <a  href="{{ url('/perfiles') }}">Almacenes</a>
-     
-     
-    </div>
-  </li>
+   <li class="dropdown">
+        <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+          Usuarios <b class="caret"></b>
+        </a>
+        <ul class="dropdown-menu">
+          <li><a href="{{ url('user') }}">Usuarios</a></li>
+          <li class="divider"></li>
+          <li><a href="{{ url('perfiles') }}">Perfiles</a></li>
+          
+          
+        </ul>
+      </li>
+     <li class="dropdown">
+        <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+          Ventas <b class="caret"></b>
+        </a>
+        <ul class="dropdown-menu">
+          <li><a href="{{ url('inventarios') }}">Pedidos</a></li>
+          
+          
+          
+        </ul>
+      </li>
+  <li><a href="{{ url('clientes') }}">Clientes</a></li>
+  <li><a href="{{ url('proveedores') }}">Proveedores</a></li>
+      {{--    <li class="nav-item dropdown">
+  </li> --}}
+
+     <li class="dropdown">
+        <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+          Inventarios <b class="caret"></b>
+        </a>
+        <ul class="dropdown-menu">
+          <li><a href="{{ url('inventarios') }}">Inventarios</a></li>
+          <li class="divider"></li>
+          <li><a href="{{ url('almacen') }}">Almacenes</a></li>
+          <li class="divider"></li>
+          <li><a href="{{ url('movimientos') }}">Registrar Movimientos</a></li>
+          
+          
+        </ul>
+      </li>
+    <li class="dropdown">
+        <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+          solicitud de compras <b class="caret"></b>
+        </a>
+        <ul class="dropdown-menu">
+          <li><a href="compras/solicitud.php">Nueva Solicitud</a></li>
+          <li class="divider"></li>
+          <li><a href="compras/Revisar.php">Revisar solicitudes realizadas</a></li>
+          
+          
+        </ul>
+      </li>
+
 
                     </ul>
 
@@ -100,7 +132,7 @@
 
                                 <ul class="dropdown-menu" role="menu">
                                     <li>
-                                        <a href="{{ url('../Tecnologias') }}"
+                                        <a href="{{ url('Tecnologias') }}"
                                             onclick="event.preventDefault();
                                                      document.getElementById('logout-form').submit();">
                                             Salir

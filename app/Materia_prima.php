@@ -27,4 +27,17 @@ class Materia_prima extends Model{
      */
     protected $fillable = ['codigo','nombre', 'descripcion','id_proveedor', 'costo', 'comentarios','id_categoria','medidas','existencias'];
 
+ public function user()
+  {
+    return $this->belongsTo('App\User');
+  }
+ public function categorias()
+  {
+    return $this->belongsTo('App\Categorias');
+  }
+  public function proveedores()
+  {
+    return $this->belongsTo('App\Proveedores');
+  }
+    
 }

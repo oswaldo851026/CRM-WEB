@@ -16,15 +16,16 @@
 
 		<div class="col-xs-12 ">
 			<br>
-			<h2>Nueva Materia Prima</h2>
+			<h2>Editar Materia Prima</h2>
 			<br>
 		</div>
 
 
 
 	<br>
- <form action= "{{url('materiaprima') }}/{}" method= "post" enctype="multipart/form-data">
-	 <input type="hidden" name="_token" value="{{ csrf_token() }}">
+ <form action= "{{url('materiaprima') }}/{{$materiasprimas->id}}" method= "post" enctype="multipart/form-data">
+	  {{ method_field('PATCH') }}
+   {{ csrf_field() }}
 	<div class="row">
   <input type="hidden"  name="idusuario" id= '{{$idusuario}}' class="form-control" value= "1">
 		
