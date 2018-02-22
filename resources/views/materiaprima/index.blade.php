@@ -63,11 +63,11 @@
     					<td style = "width:10%;">{{$row->costo}}</td>
     					<td style = "width:20%;" class="text-center table-crud-options"> 
            
-              <form action= "{{url('materiaprima/'.$row->idmateriaprimas)}}" method= "post">
+              <form action= "{{url('materiaprima/'.$row->idmateriaprima)}}" method= "post">
               <input type="hidden" name="_method" value="DELETE">
               <input type="hidden" name="_token" value="{{ csrf_token() }}">
               <div class="btn-group">
-              <a href="{{url('materiaprima/'.$row->idmateriaprimas)}}" class="btn btn-primary"><i class="glyphicon glyphicon-eye-open"></i></a>
+              <a href="{{url('materiaprima/'.$row->idmateriaprima)}}" class="btn btn-primary"><i class="glyphicon glyphicon-eye-open"></i></a>
     					<a href="{{url('materiaprima/'.$row->id.'/edit')}}" class="btn btn-warning"><i class="glyphicon glyphicon-pencil"></i></a>
               <button type="submit" class="btn btn-danger"><i class="glyphicon glyphicon-remove"></i></button>
               </form>

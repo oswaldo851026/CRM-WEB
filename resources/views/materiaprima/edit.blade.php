@@ -34,21 +34,21 @@
 			<div class="form-group" >
 			<div class="col-lg-12">
 			<label for="nombre" class="col-lg-10">*Nombre de la materia prima</label>
-			<input type="text" tabindex="1" name="nombre" id= 'nombre' class="form-control" placeholder="Primer nombre" required> <br/>
+			<input type="text" tabindex="1" name="nombre" id= 'nombre' class="form-control" placeholder="Primer nombre" value="{{$materiasprimas->nombre}}" required> <br/>
 			</div>
 			</div>
 			
 			<div class="form-group" >
 			<div class="col-lg-12">
 			<label for="descripcion" class="col-lg-10">Descripción</label>
-			<input type="text" tabindex="3" name="descripcion" id= 'descripcion' class="form-control" placeholder="Descripcion" > <br/>
+			<input type="text" tabindex="3" name="descripcion" id= 'descripcion' class="form-control" placeholder="Descripcion" value="{{$materiasprimas->descripcion}}"> <br/>
 			</div>
 			</div>
 			
 			<div class="form-group" >
 			<div class="col-lg-12">
 			<label for="precio" class="col-lg-10">costo</label>
-			<input type="number" tabindex="5" name="costo" id= 'precio' class="form-control" placeholder="costo" > <br/>
+			<input type="number" tabindex="5" name="costo" id= 'precio' class="form-control" placeholder="costo" value="{{$materiasprimas->costo}}"> <br/>
 			</div>
 			</div>
 			<div class="form-group" >
@@ -59,10 +59,10 @@
 		</div>
 		<div class="form-group" >
 			<div class="col-lg-12">
-			<label for="existencias" class="col-lg-10">Medidas</label>
+			<label for="existencias" class="col-lg-10" >Medidas</label>
 			
 			<select name="medidas" id="" class="form-control">
-				<option value="">Eligie una opción</option>
+				<option value="{{$materiasprimas->medidas}}">Eligie una opción</option>
 				<option value="toneladas">Toneladas</option>
 				<option value="centimetros">Centimetros</option>
 				<option value="onzas">Onzas</option>
@@ -81,7 +81,7 @@
       <div class="form-group" >
 			<div class="col-lg-12">
 			<label for="codigo" class="col-lg-10">*codigo</label>
-			<input type="text" tabindex="2" name="codigo" id= 'email' class="form-control" placeholder="codigo" required> <br/>
+			<input type="text" tabindex="2" name="codigo" id= 'codigo' class="form-control" placeholder="codigo" value="{{$materiasprimas->codigo}}" required> <br/>
 			</div>
 			</div>
      <div class="form-group" >

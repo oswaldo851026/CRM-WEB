@@ -60,7 +60,7 @@
 			<div class="col-lg-12">
 			<label for="existencias" class="col-lg-10">Medidas</label>
 			
-			<select name="medidas" id="" class="form-control">
+			<select name="medidas" id="medidas" class="form-control">
 				<option value="">Eligie una opción</option>
 				<option value="toneladas">Toneladas</option>
 				<option value="centimetros">Centimetros</option>

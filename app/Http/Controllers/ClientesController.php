@@ -81,11 +81,22 @@ class ClientesController extends Controller
      * @param  \App\Clientes  $clientes
      * @return \Illuminate\Http\Response
      */
-    public function show(Clientes $clientes)
-    {
-        //
-    }
+    public function show($id)
+     {
+    if (Sentry::check()){ 
+     $idusuario = Sentry::getUser()->id;
+     
+     $editar_clientes =Clientes::findOrFail($id);
+     $proveedores = DB::table('clientes')->get();
+    return view('clientes.view',['clientes'=>$editar_clientes, 'idusuario'=>$idusuario
+        ]);
 
+     } else {
+
+        return View('sentinel.sessions.login');
+     }
+
+    }
     /**
      * Show the form for editing the specified resource.
      *
@@ -122,8 +133,8 @@ class ClientesController extends Controller
     {
 
     $cliente = Clientes::findOrFail($id);
-        if($clientes->update ($request->all())){
-          session()->flash('crearCliente', "Un cliente ha sido editado");
+        if($cliente->update ($request->all())){
+          session()->flash('crearcliente', "Un cliente ha sido editado");
           return redirect("clientes");
      } else{
           return view('clientes.edit',["clientes"=>$cliente]);
