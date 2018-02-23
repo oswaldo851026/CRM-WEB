@@ -19,6 +19,8 @@ class CreateClientesTable extends Migration
             $table->string('apellidos', 250);
             $table->longtext('direccion');
             $table->string('razon_social', 250)->nulleable();
+            $table->float('descuento', 250);
+            $table->string('telefono', 250);
             $table->timestamps();
         });
     }

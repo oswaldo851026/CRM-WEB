@@ -10,20 +10,23 @@
 @section('content')
 
 
+
+
+
     <div class="container">
         <div class="row">
             <div class="col-md-12">
                 <div class="panel panel-default">
-	         <div class="panel-heading">Materia Prima</div>
+	         <div class="panel-heading">Clientes</div>
           <div class="panel-body">
            <div class="col-md-6">
-           <a href="{{ url('materiaprima/create') }}" class="btn btn-success btn-sm" title="Agregar un nuevo materia prima">
+           <a href="{{ url('clientes/create') }}" class="btn btn-success btn-sm" title="Agregar un nuevo cliente">
                             <i class="fa fa-plus" aria-hidden="true"></i> Agregar 
              </a>
             <br>
            </div>
               <div class="col-md-6">
-             <form method="GET" action="{{ url('materiaprima') }}" accept-charset="UTF-8" class="navbar-form navbar-right" role="search">
+             <form method="GET" action="{{ url('clientes') }}" accept-charset="UTF-8" class="navbar-form navbar-right" role="search">
                             <div class="input-group">
                                 <input type="text" class="form-control" name="search" placeholder="Buscar..." value="{{ request('search') }}">
                                 <span class="input-group-btn">
@@ -41,34 +44,37 @@
             <thead>
             <tr>
 			      <th>id</th>
-            <th>codigo</th>
             <th>nombre</th>
-            <th>categoria</th>
-            <th>descripcion</th>
-            <th>proveedor</th>
-            <th>costo</th>
+            <th>apellido</th>
+            <th>dirección</th>
+            <th>razon social</th>
+            <th>descuento</th>
+             <th>telefono</th>
+            
             <th class="text-center">Acciones</th>
             </tr>
           </thead>
           <tbody>
-            <?php if (count($materiaprima) > 0): ?>
-          <?php foreach ($materiaprima as $row): ?>
+            <?php if (count($listaclientes) > 0): ?>
+          <?php foreach ($listaclientes as $row): ?>
             <tr>
-    					<td style = "width:10%;">{{$row->id}}</td>
-    					<td style = "width:10%;">{{$row->codigo}}</td>
+    					<td style = "width:10%;">{{$row->idcliente}}</td>
     					<td style = "width:10%;">{{$row->nombre}}</td>
-    					<td style = "width:10%;">{{$row->nombrecategoria}}</td>
-    					<td style = "width:10%;">{{$row->descripcion}}</td>
-    					<td style = "width:10%;">{{$row->nombreproveedor}}</td>
-    					<td style = "width:10%;">{{$row->costo}}</td>
+    					<td style = "width:10%;">{{$row->apellidos}}</td>
+    					<td style = "width:10%;">{{$row->direccion}}</td>
+    					<td style = "width:10%;">{{$row->razon_social}}</td>
+    					<td style = "width:10%;">{{$row->descuento}}</td>
+    					
+              <td style = "width:10%;">{{$row->telefono}}</td>
+
     					<td style = "width:20%;" class="text-center table-crud-options"> 
            
-              <form action= "{{url('materiaprima/'.$row->idmateriaprima)}}" method= "post">
+              <form action= "{{url('clientes/'.$row->idcliente)}}" method= "post">
               <input type="hidden" name="_method" value="DELETE">
               <input type="hidden" name="_token" value="{{ csrf_token() }}">
               <div class="btn-group">
-              <a href="{{url('materiaprima/'.$row->idmateriaprima)}}" class="btn btn-primary"><i class="glyphicon glyphicon-eye-open"></i></a>
-    					<a href="{{url('materiaprima/'.$row->id.'/edit')}}" class="btn btn-warning"><i class="glyphicon glyphicon-pencil"></i></a>
+              <a href="{{url('clientes/'.$row->idcliente)}}" class="btn btn-primary"><i class="glyphicon glyphicon-eye-open"></i></a>
+    					<a href="{{url('clientes/'.$row->idcliente.'/edit')}}" class="btn btn-warning"><i class="glyphicon glyphicon-pencil"></i></a>
               <button type="submit" class="btn btn-danger"><i class="glyphicon glyphicon-remove"></i></button>
               </form>
               </td>
@@ -86,7 +92,7 @@
 			  
 			    <div class="box-footer clearfix">
             <div class= col-xs-12>
-                 {{$materiaprima->render()}}
+                 {{$listaclientes->render()}}
 
          		</div>
 				</div>

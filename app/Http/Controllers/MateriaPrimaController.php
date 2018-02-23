@@ -20,22 +20,45 @@ class MateriaPrimaController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function index(Request $request)
-     {
-        $keyword = $request->get('search');
-        $perPage = 25;
+    //  {
+    //     $keyword = $request->get('search');
+    //     $perPage = 25;
 
-        if (!empty($keyword)) {
-            $materiaprima = Materia_prima::where('nombre', 'LIKE', "%$keyword%")
-                ->orWhere('descripcion', 'LIKE', "%$keyword%")
-                ->orWhere('costo', 'LIKE', "%$keyword%")
-                ->orWhere('comentarios', 'LIKE', "%$keyword%")
+    //     if (!empty($keyword)) {
+    //         $materiaprima = Materia_prima::where('nombre', 'LIKE', "%$keyword%")
+    //             ->orWhere('descripcion', 'LIKE', "%$keyword%")
+    //             ->orWhere('costo', 'LIKE', "%$keyword%")
+    //             ->orWhere('comentarios', 'LIKE', "%$keyword%")
                 
-                ->paginate($perPage);
-        } else {
-            $materiaprima = Materia_prima::paginate($perPage);
-        }
+    //             ->paginate($perPage);
+    //     } else {
+    //         $materiaprima = Materia_prima::paginate($perPage);
+    //     }
 
-        return view ('materiaprima.index', compact('materiaprima'));
+    //     return view ('materiaprima.index', compact('materiaprima'));
+    // }
+    {
+      if (Sentry::check()){ 
+      $busqueda= $request->input('search');
+      $materiaprima = DB::table('materia_primas')
+      ->select("materia_primas.id as idmateriaprima", "materia_primas.*", "proveedores.razon_social as nombreproveedor", "categorias.nombre as nombrecategoria")
+      ->leftJoin('categorias','materia_primas.id_categoria','categorias.id')
+      ->leftJoin('proveedores','materia_primas.id_proveedor','proveedores.id');
+      if(!empty($busqueda)) { 
+      $materiaprima= $materiaprima->where('materiaprima.nombre', 'like', $busqueda)
+      ->orWhere('materia_primas.costo', 'like', $busqueda)
+      ->orWhere('materia_primas.descripcion', 'like', $busqueda)
+      ->orWhere('materia_primas.id', 'like', $busqueda);
+      }
+      $materiaprima= $materiaprima->orderBy('id')->paginate(10);
+
+      return view('materiaprima.index',['materiaprima'=>$materiaprima]);
+      } else {
+
+      return View('sentinel.sessions.login');
+       }
+
+
     }
 
     
@@ -87,9 +110,19 @@ class MateriaPrimaController extends Controller
      */
     public function show($id)
     {
-        $promotore = MateriaPrima::findOrFail($id);
+    if (Sentry::check()){ 
+     $idusuario = Sentry::getUser()->id;
+     $categorias = DB::table('categorias')->get();
+     $editar_materiaprima =Materia_prima::findOrFail($id);
+     $proveedores = DB::table('proveedores')->get();
+     return view('materiaprima.view',['categorias'=>$categorias, 'proveedores'=>$proveedores, 'idusuario'=>$idusuario, 
+        'materiasprimas'=> $editar_materiaprima]);
 
-        return view('materiaprima.show', compact('MateriaPrima'));
+     } else {
+
+        return View('sentinel.sessions.login');
+     }
+
     }
 
     /**
@@ -100,9 +133,22 @@ class MateriaPrimaController extends Controller
      */
     public function edit($id)
     {
-        $Materia_prima = MateriaPrima::findOrFail($id);
+   
+     if (Sentry::check()){ 
+     $idusuario = Sentry::getUser()->id;
+     $categorias = DB::table('categorias')->get();
+     $editar_materiaprima =Materia_prima::findOrFail($id);
+     $proveedores = DB::table('proveedores')->get();
+     return view('materiaprima.edit',['categorias'=>$categorias, 'proveedores'=>$proveedores, 'idusuario'=>$idusuario, 
+        'materiasprimas'=> $editar_materiaprima]);
 
-        return view('materiaprima.edit', compact('MateriaPrima'));
+     } else {
+
+        return View('sentinel.sessions.login');
+     }
+
+    
+
     }
 
     /**
@@ -116,7 +162,7 @@ class MateriaPrimaController extends Controller
     {
          $requestData = $request->all();
         
-        $MateriaPrima = MateriaPrima::findOrFail($id);
+        $MateriaPrima = Materia_prima::findOrFail($id);
         $MateriaPrima->update($requestData);
 
         return redirect('materiaprima')->with('flash_message', 'materia prima actualizado!');
@@ -130,8 +176,12 @@ class MateriaPrimaController extends Controller
      */
     public function destroy($id)
     {
-         MateriaPrima::destroy($id);
+          $MateriaPrima = Materia_prima::findOrFail($id);
+     if ($MateriaPrima->delete()) {
+        return redirect("materiaprima")->with(['mensaje_eliminarcliente', 'Un cliente ha sido eliminado']);
+      } else {
 
-        return redirect('materiaprima')->with('flash_message', 'materia prima Borrado!');
+      return redirect("materiaprima")->with('mensaje_eliminarcliente2', 'El cliente no puede ser eliminado');
+    }
     }
 }

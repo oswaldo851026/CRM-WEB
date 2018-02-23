@@ -1,0 +1,113 @@
+
+
+ 
+
+<head>
+<link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+</head>
+@extends('layouts.app')
+
+@section('content')
+ 
+<body>
+
+ <div class="container">
+   <div class="row">	
+   <div class="panel panel-default">	
+
+		<div class="col-xs-12 ">
+			<br>
+			<h2>Ver Cliente</h2>
+			<br>
+		</div>
+
+
+
+	<br>
+ <form action= "{{url('clientes') }}" method= "post">
+	 <input type="hidden" name="_token" value="{{ csrf_token() }}">
+	<div class="row">
+  <input type="hidden"  name="idusuario" id= '{{$idusuario}}' class="form-control" value= "1">
+		
+<!--Primera columna -->
+		<div class="col-xs-6">
+			<div class="form-group" >
+			<div class="col-lg-12">
+			<label for="nombre" class="col-lg-10">*Nombre</label>
+			<input readonly type="text" tabindex="1" name="nombre" id= 'nombre' class="form-control" placeholder="Nombre" required value="{{$clientes->nombre}}"> <br/>
+			</div>
+			</div>
+			
+			<div class="form-group" >
+			<div class="col-lg-12">
+			<label for="apellidos" class="col-lg-10">Apellidos</label>
+			<input readonly type="text" tabindex="3" name="apellidos" id= 'apellidos' class="form-control" placeholder="Apellidos" value="{{$clientes->apellidos}}"> <br/>
+			</div>
+			</div>
+			
+			<div class="form-group" >
+			<div class="col-lg-12">
+			<label for="direccion" class="col-lg-10">Dirección</label>
+			<input readonly type="text" tabindex="1" name="direccion" id= 'direccion' class="form-control" placeholder="Dirección" required value="{{$clientes->direccion}}"> <br/>
+			</div>
+			</div>
+			
+		</div>
+
+
+
+
+ <!--Segunda columna -->
+		<div class="col-xs-6">
+      <div class="form-group" >
+			<div class="col-lg-12">
+			<label for="notas" class="col-lg-10">Razon social</label>
+			<input readonly type="razon_social" tabindex="9" name="razon_social" id= 'razon_social' class="form-control" placeholder="Razón social" value="{{$clientes->razon_social}}"> <br/>
+			</div>
+		</div>
+     <div class="form-group" >
+			<div class="col-lg-12">
+			<label for="notas" class="col-lg-10">Descuento</label>
+			<input readonly  type="numeric" tabindex="9" name="descuento" id= 'descuento' class="form-control" placeholder="Descuento" value="{{$clientes->descuento}}"> <br/>
+			</div>
+		</div>
+		<div class="form-group" >
+			<div class="col-lg-12">
+			<label for="notas" class="col-lg-10">Telefono</label>
+			<input readonly type="numeric" tabindex="9" name="telefono" id= 'telefono' class="form-control" placeholder="telefono" value="{{$clientes->telefono}}"> <br/>
+			</div>
+		</div>
+
+	
+         
+
+
+	 </div>
+
+
+   <div class="col-lg-12">
+	 <div class="form-group" >
+	 <div class="col-lg-12">
+	 <label for="comentarios" class="col-lg-10">Comentarios</label>
+	 <textarea readonly  class="form-control" rows="5" type="text" tabindex="7" name="comentarios" id= 'comentarios' value="{{$clientes->comentarios}}"> </textarea> <br/>
+	 </div>
+    </div>
+	</div>
+
+
+
+	<div class= "col-lg-12 col-lg-offset-9 col-xs-12 col-xs-offset-4">
+	<br>
+
+	 <a href= {{ url('clientes') }}  type="submit" class="btn btn-default">Regresar</a>
+	
+	 <br>
+ </div>
+
+	</div>
+</form>
+</div>
+</div>
+</div>
+</body>
+@endsection
