@@ -67,13 +67,13 @@
      <div class="form-group" >
 			<div class="col-lg-12">
 			<label for="notas" class="col-lg-10">Descuento</label>
-			<input type="numeric" tabindex="9" name="descuento" id= 'descuento' class="form-control" placeholder="Descuento" > <br/>
+			<input type="number" tabindex="9" name="descuento" id= 'descuento' class="form-control" placeholder="Descuento" > <br/>
 			</div>
 		</div>
 		<div class="form-group" >
 			<div class="col-lg-12">
 			<label for="notas" class="col-lg-10">Telefono</label>
-			<input type="numeric" tabindex="9" name="telefono" id= 'telefono' class="form-control" placeholder="telefono" > <br/>
+			<input type="number" tabindex="9" name="telefono" id= 'telefono' class="form-control" placeholder="telefono" > <br/>
 			</div>
 		</div>
 

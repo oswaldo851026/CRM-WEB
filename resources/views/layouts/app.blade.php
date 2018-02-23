@@ -51,9 +51,9 @@
         <ul class="dropdown-menu">
           <li><a href="{{ url('productos') }}">Productos</a></li>
           <li class="divider"></li>
-          <li><a href="{{ url('materiaprima') }}">Materia prima</a></li>
+          <li><a href="{{ url('materiaprima') }}">Materia primas</a></li>
           <li class="divider"></li>
-          <li><a href="{{ url('categorias ') }}">Categoria</a></li>
+          <li><a href="{{ url('categorias ') }}">Categorias</a></li>
           
           
         </ul>
@@ -76,7 +76,8 @@
           Ventas <b class="caret"></b>
         </a>
         <ul class="dropdown-menu">
-          <li><a href="{{ url('inventarios') }}">Pedidos</a></li>
+          <li><a href="{{ url('inventarios') }}">Lista de Pedidos</a></li>
+           <li><a href="{{ url('inventarios') }}">Nuevo pedido</a></li>
           
           
           
@@ -96,19 +97,19 @@
           <li class="divider"></li>
           <li><a href="{{ url('almacen') }}">Almacenes</a></li>
           <li class="divider"></li>
-          <li><a href="{{ url('movimientos') }}">Registrar Movimientos</a></li>
+          <li><a href="{{ url('movimientos') }}">Registrar movimientos</a></li>
           
           
         </ul>
       </li>
     <li class="dropdown">
         <a href="#" class="dropdown-toggle" data-toggle="dropdown">
-          solicitud de compras <b class="caret"></b>
+          Compras <b class="caret"></b>
         </a>
         <ul class="dropdown-menu">
-          <li><a href="compras/solicitud.php">Nueva Solicitud</a></li>
+          <li><a href="compras/solicitud.php">Lista de ordenes de compra</a></li>
           <li class="divider"></li>
-          <li><a href="compras/Revisar.php">Revisar solicitudes realizadas</a></li>
+          <li><a href="compras/Revisar.php">Nueva Orden de compra</a></li>
           
           
         </ul>
@@ -122,8 +123,8 @@
                     <ul class="nav navbar-nav navbar-right">
                         <!-- Authentication Links -->
                         @if (Auth::guest())
-                            <li><a href="{{ url('/login') }}">Login</a></li>
-                            <li><a href="{{ url('/register') }}">Register</a></li>
+                            <li><a href="#"> <i class= "fa fa-user"> </i>  {{Sentry::getUser()->first_name}}</a></li>
+                             <li><a href="{{ url('/logout') }}"> <i class= "glyphicon glyphicon-log-out"> </i>  Salir</a></li>
                         @else
                             <li class="dropdown">
                                 <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
