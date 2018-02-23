@@ -69,7 +69,7 @@ class ClientesController extends Controller
 
     if($cliente->save()){
           session()->flash('crearcliente', "ha sido agregado");
-          return redirect("cliente");
+          return redirect("clientes");
       }else{
           return view('clientes.create',["cliente"=>$cliente]);
       }
