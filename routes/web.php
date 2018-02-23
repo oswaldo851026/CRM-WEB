@@ -23,4 +23,5 @@ Route::resource('clientes','ClientesController');
 
 Route::resource('materiaprima','MateriaPrimaController');
 Route::resource('user','UsuariosController');
+Route::resource('pedidos','PedidosController');
 Route::get('/productos',array('as' => 'home','uses'=>'ProductosController@index')); //ruta de inicio

@@ -76,8 +76,8 @@
           Ventas <b class="caret"></b>
         </a>
         <ul class="dropdown-menu">
-          <li><a href="{{ url('inventarios') }}">Lista de Pedidos</a></li>
-           <li><a href="{{ url('inventarios') }}">Nuevo pedido</a></li>
+          <li><a href="{{ url('pedidos') }}">Lista de Pedidos</a></li>
+           <li><a href="{{ url('pedidos/create') }}">Nuevo pedido</a></li>
           
           
           
