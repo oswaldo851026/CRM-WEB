@@ -95,13 +95,30 @@
         <ul class="dropdown-menu">
           <li><a href="{{ url('inventarios') }}">Inventarios</a></li>
           <li class="divider"></li>
-          <li><a href="{{ url('almacen') }}">Almacenes</a></li>
+          <li><a href="{{ url('inventarios/create') }}">Registrar movimientos</a></li>
           <li class="divider"></li>
-          <li><a href="{{ url('movimientos') }}">Registrar movimientos</a></li>
+          <li><a href="{{ url('almacenes') }}">Almacenes</a></li>
           
           
         </ul>
       </li>
+   <li class="dropdown">
+        <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+          Producción <b class="caret"></b>
+        </a>
+        <ul class="dropdown-menu">
+          <li><a href="{{ url('produccion') }}">Listado de producción</a></li>
+          <li class="divider"></li>
+          <li><a href="{{ url('produccion/create') }}">Nueva orden de producción</a></li>
+          <li class="divider"></li>
+          <li><a href="{{ url('billMaterials') }}">Configuración de Bill of materials</a></li>
+          
+          
+        </ul>
+      </li> 
+  
+
+
     <li class="dropdown">
         <a href="#" class="dropdown-toggle" data-toggle="dropdown">
           Compras <b class="caret"></b>
