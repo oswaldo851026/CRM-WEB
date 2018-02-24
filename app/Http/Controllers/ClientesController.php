@@ -16,6 +16,8 @@ class ClientesController extends Controller
      */
     public function index(Request $request)
     {
+      $idusuario = Sentry::getUser()->id;
+      $idperfil = Sentry::getUser()->id_perfil; 
        if (Sentry::check()){ 
       $busqueda= $request->input('search');
       $listaclientes = DB::table('clientes')

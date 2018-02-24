@@ -39,6 +39,8 @@ class MateriaPrimaController extends Controller
     // }
     {
       if (Sentry::check()){ 
+         $idusuario = Sentry::getUser()->id;
+      $idperfil = Sentry::getUser()->id_perfil; 
       $busqueda= $request->input('search');
       $materiaprima = DB::table('materia_primas')
       ->select("materia_primas.id as idmateriaprima", "materia_primas.*", "proveedores.razon_social as nombreproveedor", "categorias.nombre as nombrecategoria")

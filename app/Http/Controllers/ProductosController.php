@@ -21,6 +21,8 @@ class ProductosController extends Controller
     public function index(Request $request)
     {
       if (Sentry::check()){ 
+      $idusuario = Sentry::getUser()->id;
+      $idperfil = Sentry::getUser()->id_perfil; 
       $busqueda= $request->input('search');
       $listaProductos = DB::table('productos')
       ->select("productos.id as idproductos", "productos.*", "proveedores.razon_social as nombreproveedor", "categorias.nombre as nombrecategoria")
