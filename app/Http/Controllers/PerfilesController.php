@@ -4,6 +4,9 @@ namespace App\Http\Controllers;
 
 use App\Perfiles;
 use Illuminate\Http\Request;
+use DB;
+use Sentry;
+use Illuminate\Support\Facades\Input;
 
 class PerfilesController extends Controller
 {
@@ -14,7 +17,16 @@ class PerfilesController extends Controller
      */
     public function index()
     {
-        //
+              if (Sentry::check()){ 
+        $listaPerfiles = DB::table('perfiles')->get();
+
+      return view('perfiles.index',['listaPerfiles'=>$listaPerfiles]);
+      } else {
+
+      return View('sentinel.sessions.login');
+       }
+        
+
     }
 
     /**

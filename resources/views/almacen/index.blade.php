@@ -17,16 +17,16 @@
         <div class="row">
             <div class="col-md-12">
                 <div class="panel panel-default">
-	         <div class="panel-heading">Clientes</div>
+	         <div class="panel-heading">Almacen</div>
           <div class="panel-body">
            <div class="col-md-6">
-           <a href="{{ url('clientes/create') }}" class="btn btn-success btn-sm" title="Agregar un nuevo cliente">
+           <a href="{{ url('almacenes/create') }}" class="btn btn-success btn-sm" title="Agregar una nuevo almacen">
                             <i class="fa fa-plus" aria-hidden="true"></i> Agregar 
              </a>
             <br>
            </div>
               <div class="col-md-6">
-             <form method="GET" action="{{ url('clientes') }}" accept-charset="UTF-8" class="navbar-form navbar-right" role="search">
+             <form method="GET" action="{{ url('almacenes') }}" accept-charset="UTF-8" class="navbar-form navbar-right" role="search">
                             <div class="input-group">
                                 <input type="text" class="form-control" name="search" placeholder="Buscar..." value="{{ request('search') }}">
                                 <span class="input-group-btn">
@@ -43,38 +43,31 @@
 			      <table class="table-bordered table-striped table-condensed table-hover" style= "width:100%;">
             <thead>
             <tr>
-			      <th>Id</th>
+			      <th>id</th>
             <th>Nombre</th>
-            <th>Apellido</th>
-            <th>Dirección</th>
-            <th>Razón social</th>
-            <th>Descuento</th>
-             <th>Teléfono</th>
-            
-            <th class="text-center">Acciones</th>
+            <th>Descripcion</th>
+            <th>Capacidad</th>
+            <th>Acciones<th>
+
             </tr>
           </thead>
           <tbody>
-            <?php if (count($listaclientes) > 0): ?>
-          <?php foreach ($listaclientes as $row): ?>
+            <?php if (count($listaAlmacen) > 0): ?>
+          <?php foreach ($listaAlmacen as $row): ?>
             <tr>
-    					<td style = "width:5%;">{{$row->idcliente}}</td>
-    					<td style = "width:10%;">{{$row->nombre}}</td>
-    					<td style = "width:10%;">{{$row->apellidos}}</td>
-    					<td style = "width:20%;">{{$row->direccion}}</td>
-    					<td style = "width:10%;">{{$row->razon_social}}</td>
-    					<td style = "width:5%;">{{$row->descuento}}%</td>
+    					<td style = "width:10%;">{{$row->idalmacen}}</td>
+    					<td style = "width:20%;">{{$row->nombre_almacen}}</td>
+              <td style = "width:40%;">{{$row->descripcion}}</td>
+                <td style = "width:10%;">{{$row->capacidad}}</td>
     					
-              <td style = "width:10%;">{{$row->telefono}}</td>
-
-    					<td style = "width:20%;" class="text-center table-crud-options"> 
-           
-              <form action= "{{url('clientes/'.$row->idcliente)}}" method= "post">
+    					
+                <td style = "width:20%;">
+              <form action= "{{url('almacenes/'.$row->idalmacen)}}" method= "post">
               <input type="hidden" name="_method" value="DELETE">
               <input type="hidden" name="_token" value="{{ csrf_token() }}">
               <div class="btn-group">
-              <a href="{{url('clientes/'.$row->idcliente)}}" class="btn btn-primary"><i class="glyphicon glyphicon-eye-open"></i></a>
-    					<a href="{{url('clientes/'.$row->idcliente.'/edit')}}" class="btn btn-warning"><i class="glyphicon glyphicon-pencil"></i></a>
+              <a href="{{url('almacenes/'.$row->idalmacen)}}" class="btn btn-primary"><i class="glyphicon glyphicon-eye-open"></i></a>
+    					<a href="{{url('almacenes/'.$row->idalmacen.'/edit')}}" class="btn btn-warning"><i class="glyphicon glyphicon-pencil"></i></a>
               <button type="submit" class="btn btn-danger"><i class="glyphicon glyphicon-remove"></i></button>
               </form>
               </td>
@@ -92,7 +85,7 @@
 			  
 			    <div class="box-footer clearfix">
             <div class= col-xs-12>
-                 {{$listaclientes->render()}}
+                 {{$listaAlmacen->render()}}
 
          		</div>
 				</div>

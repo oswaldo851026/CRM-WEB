@@ -1,3 +1,5 @@
+
+
 <!DOCTYPE html>
 <html lang="es">
 
@@ -17,16 +19,16 @@
         <div class="row">
             <div class="col-md-12">
                 <div class="panel panel-default">
-	         <div class="panel-heading">Clientes</div>
+           <div class="panel-heading">Proveedores</div>
           <div class="panel-body">
            <div class="col-md-6">
-           <a href="{{ url('clientes/create') }}" class="btn btn-success btn-sm" title="Agregar un nuevo cliente">
+           <a href="{{ url('proveedores/create') }}" class="btn btn-success btn-sm" title="Agregar un nuevo proveedor">
                             <i class="fa fa-plus" aria-hidden="true"></i> Agregar 
              </a>
             <br>
            </div>
               <div class="col-md-6">
-             <form method="GET" action="{{ url('clientes') }}" accept-charset="UTF-8" class="navbar-form navbar-right" role="search">
+             <form method="GET" action="{{ url('proveedores') }}" accept-charset="UTF-8" class="navbar-form navbar-right" role="search">
                             <div class="input-group">
                                 <input type="text" class="form-control" name="search" placeholder="Buscar..." value="{{ request('search') }}">
                                 <span class="input-group-btn">
@@ -39,65 +41,57 @@
               <br>
               </div>
            <div class="col-md-12">
-			    <div class="box-body table-responsive">
-			      <table class="table-bordered table-striped table-condensed table-hover" style= "width:100%;">
-            <thead>
+          <div class="box-body table-responsive">
+            <table class="table-bordered table-striped table-condensed table-hover" style= "width:100%;">
+           <thead>
             <tr>
-			      <th>Id</th>
-            <th>Nombre</th>
-            <th>Apellido</th>
+            <th>id</th>
             <th>Dirección</th>
             <th>Razón social</th>
-            <th>Descuento</th>
-             <th>Teléfono</th>
-            
-            <th class="text-center">Acciones</th>
+            <th>Teléfono</th>
+            <th>Nombre contacto</th>
+            <th>Acciones</th>
             </tr>
           </thead>
           <tbody>
-            <?php if (count($listaclientes) > 0): ?>
-          <?php foreach ($listaclientes as $row): ?>
+            <?php if (count($listaProveedores) > 0): ?>
+          <?php foreach ($listaProveedores as $row): ?>
             <tr>
-    					<td style = "width:5%;">{{$row->idcliente}}</td>
-    					<td style = "width:10%;">{{$row->nombre}}</td>
-    					<td style = "width:10%;">{{$row->apellidos}}</td>
-    					<td style = "width:20%;">{{$row->direccion}}</td>
-    					<td style = "width:10%;">{{$row->razon_social}}</td>
-    					<td style = "width:5%;">{{$row->descuento}}%</td>
-    					
+              <td style = "width:5%;">{{$row->idproveedores}}</td>
+              <td style = "width:30%;">{{$row->direccion}}</td>
+              <td style = "width:20%;">{{$row->razon_social}}</td>
               <td style = "width:10%;">{{$row->telefono}}</td>
-
-    					<td style = "width:20%;" class="text-center table-crud-options"> 
-           
-              <form action= "{{url('clientes/'.$row->idcliente)}}" method= "post">
+              <td style = "width:10%;">{{$row->nombre_contacto}}</td>
+              <td style = "width:20%">
+              <form action= "{{url('proveedores/'.$row->idproveedores)}}" method= "post">
               <input type="hidden" name="_method" value="DELETE">
               <input type="hidden" name="_token" value="{{ csrf_token() }}">
               <div class="btn-group">
-              <a href="{{url('clientes/'.$row->idcliente)}}" class="btn btn-primary"><i class="glyphicon glyphicon-eye-open"></i></a>
-    					<a href="{{url('clientes/'.$row->idcliente.'/edit')}}" class="btn btn-warning"><i class="glyphicon glyphicon-pencil"></i></a>
+              <a href="{{url('proveedores/'.$row->idproveedores)}}" class="btn btn-primary"><i class="glyphicon glyphicon-eye-open"></i></a>
+              <a href="{{url('proveedores/'.$row->idproveedores.'/edit')}}" class="btn btn-warning"><i class="glyphicon glyphicon-pencil"></i></a>
               <button type="submit" class="btn btn-danger"><i class="glyphicon glyphicon-remove"></i></button>
               </form>
               </td>
   
-    				</tr>
-						<?php endforeach ?>
-						<?php else: ?>
-							<tr>
-								<td class="text-center" colspan="12">No se encontraron resultados.</td>
-							</tr>
-						<?php endif ?>
+            </tr>
+            <?php endforeach ?>
+            <?php else: ?>
+              <tr>
+                <td class="text-center" colspan="12">No se encontraron resultados.</td>
+              </tr>
+            <?php endif ?>
 
 
-			      </table>
-			  
-			    <div class="box-footer clearfix">
+            </table>
+        
+          <div class="box-footer clearfix">
             <div class= col-xs-12>
-                 {{$listaclientes->render()}}
+                 {{$listaProveedores->render()}}
 
-         		</div>
-				</div>
-			  </div> <!-- divtabla-->
-		     </div>
+            </div>
+        </div>
+        </div> <!-- divtabla-->
+         </div>
                     </div>
                 </div>
             </div>
@@ -114,5 +108,3 @@
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
 </body>
 </html>
-
-

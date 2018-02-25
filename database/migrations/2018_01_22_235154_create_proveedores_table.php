@@ -19,6 +19,7 @@ class CreateProveedoresTable extends Migration
             $table->string('razon_social', 250)->nulleable();
             $table->string('telefono', 250)->nulleable();
             $table->string('nombre_contacto', 250)->nulleable();
+             $table->string('apellido_contacto', 250)->nulleable();
             $table->timestamps();
         });
     }

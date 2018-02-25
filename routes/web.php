@@ -20,7 +20,7 @@ Route::get('/', array('as' => 'login', function()
 
 Route::resource('productos','ProductosController');
 Route::resource('clientes','ClientesController');
-
+Route::resource('perfiles','PerfilesController');
 Route::resource('materiaprima','MateriaPrimaController');
 Route::resource('user','UsuariosController');
 Route::resource('pedidos','PedidosController');
@@ -28,7 +28,8 @@ Route::resource('inventarios','InventariosController');
 Route::resource('billmaterials','BillMaterialsController');
 Route::resource('compras','OrdenesCompraController');
 Route::resource('categorias','CategoriasController');
-Route::resource('Proveedores','ProveedoresController');
+Route::resource('proveedores','ProveedoresController');
 Route::resource('cuentasPorPagar','CuentasPagarController');
 Route::resource('cuentasPorCobrar','CuentasCobrarController');
+Route::resource('almacenes','AlmacenController');
 Route::get('/productos',array('as' => 'home','uses'=>'ProductosController@index')); //ruta de inicio

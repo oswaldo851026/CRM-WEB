@@ -68,7 +68,7 @@
      <div class="form-group" >
 			<div class="col-lg-12">
 			<label for="notas" class="col-lg-10">Descuento</label>
-			<input readonly  type="numeric" tabindex="9" name="descuento" id= 'descuento' class="form-control" placeholder="Descuento" value="{{$clientes->descuento}}"> <br/>
+			<input readonly  type="numeric" tabindex="9" name="descuento" id= 'descuento' class="form-control" placeholder="Descuento" value="{{$clientes->descuento}}%"> <br/>
 			</div>
 		</div>
 		<div class="form-group" >

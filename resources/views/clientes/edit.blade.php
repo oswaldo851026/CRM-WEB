@@ -101,7 +101,7 @@
 	<div class= "col-lg-12 col-lg-offset-9 col-xs-12 col-xs-offset-4">
 	<br>
 	 <button type="submit" class="btn btn-primary">Guardar</button>
-	 <a href= {{ url('productos') }}  type="submit" class="btn btn-default">Regresar</a>
+	 <a href= {{ url('clientes') }}  type="submit" class="btn btn-default">Regresar</a>
 	 <button type="reset" class="btn btn-danger">Cancelar</button>
 	 <br>
  </div>

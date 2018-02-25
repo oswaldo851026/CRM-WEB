@@ -13,6 +13,11 @@ class Almacen extends Migration
             $table->timestamps();
             $table->string('nombre_almacen', 250);
             $table->string('descripcion', 250);
+            $table->integer('prioridad');
+            $table->string('tipo_almacen', 250);
+             $table->float('capacidad');
+             $table->integer('prioridad_entrada');
+             $table->integer('prioridad_salida');
         });
     }
 
