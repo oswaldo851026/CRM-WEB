@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Pedidos;
 use App\Clientes;
+use App\User;
 use App\Detalle_pedido;
 use App\Productos;
 use DB;
@@ -64,7 +65,20 @@ class PedidosController extends Controller
      */
     public function create()
     {
-        //
+       if (Sentry::check()){ 
+        $idusuario = Sentry::getUser()->id;
+        $idperfil = Sentry::getUser()->id_perfil; 
+        $lista_usuarios =  DB::table('users')->get();
+        $clientes = Clientes::all();
+        $productos = productos::all();
+        return view('pedidos.create',['idusuario'=>$idusuario, 'idperfil' => $idperfil, 'lista_usuarios' => $lista_usuarios, 'clientes'=>$clientes, "productos"=> $productos]);
+       } else {
+
+        return View('sentinel.sessions.login');
+
+       }
+
+
     }
 
     /**

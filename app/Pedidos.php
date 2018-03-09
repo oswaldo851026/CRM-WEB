@@ -19,7 +19,9 @@ protected $fillable = [
     'subotal',
     'iva',
     'descuento',
-    'total'
+    'total',
+    'metodo_pago',
+    'fecha_entrega'
  
   ];
 

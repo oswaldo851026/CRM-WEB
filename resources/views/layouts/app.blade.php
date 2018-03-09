@@ -12,8 +12,10 @@
     <title>{{ config('app.name', 'Proyecto') }}</title>
 
     <!-- Styles -->
+
     <link href="{{ asset('css/app.css') }}" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+
 
     <!-- Scripts -->
     <script>
@@ -49,11 +51,11 @@
           Activos <b class="caret"></b>
         </a>
         <ul class="dropdown-menu">
-          <li><a href="{{ url('productos') }}">Productos</a></li>
+          <li><a class="dropdown-item"  href="{{ url('productos') }}">Productos</a></li>
           <li class="divider"></li>
-          <li><a href="{{ url('materiaprima') }}">Materia primas</a></li>
+          <li><a class="dropdown-item" href="{{ url('materiaprima') }}">Materia primas</a></li>
           <li class="divider"></li>
-          <li><a href="{{ url('categorias ') }}">Categorias</a></li>
+          <li><a class="dropdown-item" href="{{ url('categorias ') }}">Categorias</a></li>
           
           
         </ul>
@@ -64,9 +66,9 @@
           Usuarios <b class="caret"></b>
         </a>
         <ul class="dropdown-menu">
-          <li><a href="{{ url('user') }}">Usuarios</a></li>
+          <li><a  class="dropdown-item" href="{{ url('user') }}">Usuarios</a></li>
           <li class="divider"></li>
-          <li><a href="{{ url('perfiles') }}">Perfiles</a></li>
+          <li><a class="dropdown-item" href="{{ url('perfiles') }}">Perfiles</a></li>
           
           
         </ul>
@@ -76,8 +78,8 @@
           Ventas <b class="caret"></b>
         </a>
         <ul class="dropdown-menu">
-          <li><a href="{{ url('pedidos') }}">Lista de Pedidos</a></li>
-           <li><a href="{{ url('pedidos/create') }}">Nuevo pedido</a></li>
+          <li><a  class="dropdown-item" href="{{ url('pedidos') }}">Lista de Pedidos</a></li>
+           <li><a class="dropdown-item" href="{{ url('pedidos/create') }}">Nuevo pedido</a></li>
           
           
           
@@ -94,10 +96,10 @@
         </a>
         <ul class="dropdown-menu">
           <li><a href="{{ url('inventarios') }}">Inventarios</a></li>
+          <li  class="divider"></li>
+          <li><a  class="dropdown-item" href="{{ url('inventarios/create') }}">Registrar movimientos</a></li>
           <li class="divider"></li>
-          <li><a href="{{ url('inventarios/create') }}">Registrar movimientos</a></li>
-          <li class="divider"></li>
-          <li><a href="{{ url('almacenes') }}">Almacenes</a></li>
+          <li><a class="dropdown-item" href="{{ url('almacenes') }}">Almacenes</a></li>
           
           
         </ul>
@@ -107,11 +109,11 @@
           Producción <b class="caret"></b>
         </a>
         <ul class="dropdown-menu">
-          <li><a href="{{ url('produccion') }}">Listado de producción</a></li>
+          <li><a class="dropdown-item"  href="{{ url('produccion') }}">Listado de producción</a></li>
           <li class="divider"></li>
-          <li><a href="{{ url('produccion/create') }}">Nueva orden de producción</a></li>
+          <li><a  class="dropdown-item" href="{{ url('produccion/create') }}">Nueva orden de producción</a></li>
           <li class="divider"></li>
-          <li><a href="{{ url('billMaterials') }}">Configuración de Bill of materials</a></li>
+          <li><a  class="dropdown-item" href="{{ url('billMaterials') }}">Configuración de Bill of materials</a></li>
           
           
         </ul>
@@ -124,9 +126,9 @@
           Compras <b class="caret"></b>
         </a>
         <ul class="dropdown-menu">
-          <li><a href="compras/solicitud.php">Lista de ordenes de compra</a></li>
+          <li><a class="dropdown-item" href="compras/solicitud.php">Lista de ordenes de compra</a></li>
           <li class="divider"></li>
-          <li><a href="compras/Revisar.php">Nueva Orden de compra</a></li>
+          <li><a class="dropdown-item"  href="compras/Revisar.php">Nueva Orden de compra</a></li>
           
           
         </ul>
@@ -181,6 +183,33 @@
     </div>
 
     <!-- Scripts -->
-    <script src="{{ asset('js/app.js') }}"></script>
+
+
+  <!--  <script src="{{ asset('js/app.js') }}"></script>  -->
+<script src="<?= env('APP_URL'); ?>/js/jquery-3.3.1.js" type="text/javascript"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+
+  <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.4.1/js/bootstrap-datepicker.min.js"></script>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.4.1/css/bootstrap-datepicker3.css"/>
+
+ <link rel="stylesheet"  href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.3/css/select2.min.css" rel="stylesheet" />
+ <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.3/js/select2.min.js"></script>
+
+ <script> 
+
+$(document).ready(function() {
+
+$('.select2').select2();
+
+})
+
+ </script>
+
+
+
+
+
+
+
 </body>
 </html>
