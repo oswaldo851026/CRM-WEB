@@ -90,8 +90,8 @@
 			<div class="col-lg-12">
 			<label for="metodo_pago" class="col-lg-10">*Método de pago</label>
 			<select required type="text" tabindex="2" name="metodo_pago" id= 'metodo_pago' class="form-control"  >
-            <option value= "creado">Efectivo</option>
-            <option value= "enviado">Crédito</option>
+            <option value= "Efectivo">Efectivo</option>
+            <option value= "Credito">Crédito</option>
 			</select> <br/>
 			</div>
 	        </div>
@@ -101,7 +101,7 @@
 	         <div class="form-group" >
 			<div class="col-lg-12">
 			<label for="idvendedor" class="col-lg-10">Vendedor asignado</label>
-			<select type="text" tabindex="4" name="idvendedor" id= 'idvendedor' class="form-control"  >
+			<select type="text" tabindex="4" name="id_vendedor" id= 'idvendedor' class="form-control"  >
             @foreach($lista_usuarios as $row)
             <?php $selected = ""; if($row->id == $idusuario){ $selected = "selected";} ?>
             <option {{$selected}} value= "{{$row->id}}">{{$row->first_name}}</option>
@@ -158,7 +158,7 @@
 			<div class="col-lg-12">
 			<label for="razon_social" class="col-lg-10">*Nombre del Cliente</label>
 			
-			<select height="36px" class="select2 form-control cliente_input2" tabindex="8" name="razon_social" id="razon_social" required>
+			<select height="36px" class="select2 form-control cliente_input2" tabindex="8" name="datos_cliente" id="razon_social" required>
             <option value= "" >Seleccione una opción </option>
             @foreach($clientes as $r) 
             <option value= '{"idcliente":"{{$r->id}}","descuento":"{{$r->descuento}}", "direccion":"{{$r->direccion}}"}'> {{$r->razon_social}}' </option>
@@ -172,14 +172,14 @@
 		     <div class="form-group cliente_div" >
 			<div class="col-lg-12">
 			<label for="razon_social" class="col-lg-10">*Nombre del Cliente</label>
-			<input type="text" tabindex="8" name="razon_social" id="razon_social" class="form-control cliente_input" placeholder="Razón social" required> <br/>fpr
+			<input type="text" tabindex="8" name="razon_social" id="razon_social" class="form-control cliente_input" placeholder="Razón social" required> <br/>
 			</div>
 			</div>
 
 		   <div class="form-group cliente_div" >
 			<div class="col-lg-12">
 			<label for="apellidos" class="col-lg-10">*Apellido del contacto</label>
-			<input type="text" tabindex="10" name="apellidos" id= 'apellidos' class="form-control cliente_input" placeholder="Apellidos" required> <br/>
+			<input type="text" tabindex="10" name="apellidos_contacto" id= 'apellidos' class="form-control cliente_input" placeholder="Apellidos" required> <br/>
 			</div>
 			</div>   
 
@@ -207,7 +207,7 @@
             <div class="form-group cliente_div" >
 			<div class="col-lg-12">
 			<label for="nombre" class="col-lg-10">*Nombre del contacto</label>
-			<input type="text" tabindex="9" name="nombre" id= 'nombre' class="form-control cliente_input" placeholder="nombre" required> <br/>
+			<input type="text" tabindex="9" name="nombre_contacto" id= 'nombre' class="form-control cliente_input" placeholder="nombre" required> <br/>
 			</div>
 			</div>
 
@@ -223,7 +223,7 @@
                      <div class="form-group" >
 			<div class="col-lg-12">
 			<label for="descuento" class="col-lg-10">Descuento (%)</label>
-			<input type="number" min="0" tabindex="15" name="descuento" id= 'descuento' class="form-control cliente_input" placeholder="descuento" required> <br/>
+			<input type="number" min="0" tabindex="15" name="descuento" id= 'descuento' class="form-control cliente_input" value=0 required> <br/>
 			</div>
 			</div>
 
@@ -236,7 +236,7 @@
 
 <h3>Detalles de envio</h3> 	
 <div class="checkbox ">
-		<label  >  <input class= "ocultarEnvio" tabindex="18" type="checkbox" value="">Copiar dirección</label> 
+		<label  >  <input class= "ocultarEnvio" tabindex="18" type="checkbox" id="copiarDir" value="">Copiar dirección</label> 
 
 </div>
 </div>
@@ -264,7 +264,7 @@
 			 <div class="form-group" >
 			<div class="col-lg-12">
 		<div class="col-lg-12"> <label for="periodo" ><strong>Fecha de entrega</strong></label> </div>
-      <div class="input-group date form-group " id="enddate" data-date-orientation= "bottom" data-date-autoclose= true data-provide="datepicker" data-date-start-date="default" data-date-format="dd-mm-yyyy">
+      <div class="input-group date form-group " id="enddate" data-date-orientation= "bottom" data-date-autoclose= true data-provide="datepicker" data-date-start-date="default" >
       <input required class="form-control fechaFin " placeholder= "fecha_entrega"  type="text"  name="fecha_entrega" id= 'fin' class="form-control datepicker " tabindex="19"><div class="input-group-addon">
       <span class="glyphicon glyphicon-th"></span>
       </div>
@@ -284,7 +284,7 @@
         <div class="col-xs-12 ">
 			<h3>Detalles del pedido</h3> 
 			<div class="checkbox "> 	
-		<label >  <input class= "" tabindex="22" type="checkbox" value="">Aplicar descuento</label> 
+		<label >  <input class= "" tabindex="22" name="aplicar_descuento" type="checkbox" id="aplicar_descuento" value="1">Aplicar descuento</label> 
      </div> 
  	
     </div>	
@@ -303,7 +303,7 @@
 		 <select class="select2 form-control cliente_input2" tabindex="21" name="datos_producto" id="datos_producto" required>
             <option value= "" >Seleccione una opción </option>
             @foreach($productos as $r) 
-            <option value= '{"idproducto":"{{$r->id}}","nombre":"{{$r->nombre}}", "descripcion":"{{$r->descripcion}}" , "precio": "{{$r->precio}}"}'>{{$r->id}}: {{$r->nombre}} ({{$r->existencias}}) </option>
+            <option value= '{"idproducto":"{{$r->id}}","nombre":"{{$r->nombre}}", "descripcion":"{{$r->descripcion}}" , "precio": "{{$r->precio}}", "existencias": "{{$r->existencias}}"}'>{{$r->id}}: {{$r->nombre}} ({{$r->existencias}}) </option>
             @endforeach
 
 </select>
@@ -400,20 +400,54 @@ $(".cliente_input").attr("disabled", "disabled");
 
 //$("input").attr("autocomplete","true");
 
+$("#copiarDir").on("click", function(){
+if($("#copiarDir").is(':checked')){
+
+if ($(".rcliente:checked").val() == "nuevo") {
+var direccion = $("#direccion").val();
+$("#direccion_envio").val(direccion);
+console.log("soy nuevo");
+}
+if ($(".rcliente:checked").val() == "existente") {
+var cliente = $("#razon_social").val();
+if(cliente != ""){
+cliente = JSON.parse(cliente);
+$("#direccion_envio").val(cliente.direccion);	
+}
+console.log("soy existente");
+}
+
+} else {
+
+$("#direccion_envio").val("");
+console.log("hola");
+}
+
+
+});
+
+
 $(".rcliente").change(function(){
 
 var valrad = $(this).val();
 console.log(valrad);
 if(valrad == "existente"){
+var cliente = $("#razon_social").val();
+if(cliente != ""){
+cliente = JSON.parse(cliente);
+$("#descuento").val(cliente.descuento);	
+}
+
+
 $(".cliente_div").hide();
 $(".cliente_input").attr("disabled", "disabled");
-$(".cliente_input2").removeAttr("disabled", "disabled");
 $(".cliente_select").show();
 } 
 if(valrad == "nuevo"){
+$("#descuento").val(0);	
 $(".cliente_div").show();
 $(".cliente_input").removeAttr("disabled", "disabled");
-$(".cliente_input2").attr("disabled", "disabled");
+
 $(".cliente_select").hide();
 }
 
@@ -433,24 +467,54 @@ var numarray = 0;
 var subtotal = 0;
 var iva = .16;
 var total = 0; 
+var descuento = 0;
+var descuento2 = 0;
+
+$("#razon_social").change(function(){
+var cliente = $("#razon_social").val();
+cliente = JSON.parse(cliente);
+$("#descuento").val(cliente.descuento);
+});
+
+
 
 
 $("#btnagregar").on("click", function(add){
 var datos = $("#datos_producto").val();
-datos =	JSON.parse(datos);
+var cantidad = $("#cantidad").val();
+if(datos == "" ) {
+
+alert("No ha seleccionado ningún producto");
 add.preventDefault();
+return false
+
+}
+datos =	JSON.parse(datos);
+if(datos.existencias < cantidad) {
+
+alert("No hay suficientes existencias para el producto " + datos.nombre);
+add.preventDefault();
+return false
+
+}
+
+
+
+
+
 var idproducto = datos.idproducto;
 var nombre = datos.nombre;
 var precio= datos.precio;
 var descripcion = datos.descripcion;
-var cantidad = $("#cantidad").val();
-var importe = precio*cantidad
+
+var importe = precio*cantidad;
+
 var descuento_cliente = $("#datos_producto").val();
 $('#row_Nohay').remove();
 $('#tableProductos').append(
       '<tr>'
       //btnquitar
-      +'<td><button type= "button" class= "btn btn-warning" id="quitar">quitar</button></td>'
+      +'<td><button type= "button" class= "btn btn-warning quitar" id="quitar">quitar</button></td>'
       //idproducto
       +'<td id="idproducto_'+contador+'">'+idproducto
       +'<input name="idproducto[]" type="hidden" value= "'+idproducto+'">'
@@ -464,7 +528,7 @@ $('#tableProductos').append(
       +'<input name="descripcion_'+idproducto+'" type="hidden" value= "'+descripcion+'">'
       + '</td>'
       //precio
-      +'<td id="precio_td_'+idproducto+'">'+precio
+      +'<td id="precio_td_'+idproducto+'">'+" $"+parseFloat(precio).toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ",")
       +'<input name="precio_'+idproducto+'" type="hidden" value= "'+precio+'">'
       + '</td>'
       //cantidad
@@ -473,8 +537,8 @@ $('#tableProductos').append(
       + '</td>'
 
        //importe
-      +'<td id="importe_td_'+idproducto+'">'+importe
-      +'<input name="importe_'+idproducto+'" type="hidden" value= "'+importe+'">'
+      +'<td class=".importe" id="importe_td_'+idproducto+'">'+" $"+parseFloat(importe).toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ",")
+      +'<input  id="importe" name="importe_'+idproducto+'" type="hidden" value= "'+importe+'">'
       + '</td>'
 
 
@@ -488,12 +552,56 @@ $('#tableProductos').append(
 
 
 subtotal = subtotal + importe
+if($("#aplicar_descuento").is(":checked")){
+
+
+if ($(".rcliente:checked").val() == "nuevo") {
+
+descuento = ($("#descuento").val())/100;
+console.log(descuento);
+descuento = subtotal * descuento;
+
+}
+else if ($(".rcliente:checked").val() == "existente") {
+var cliente = $("#razon_social").val();
+if(cliente != ""){
+
+descuento = ($("#descuento").val())/100;
+console.log(descuento);
+descuento = subtotal * descuento;
+console.log("entro aqui");
+} else{
+
+
 descuento = 0;
-Iva = subtotal * iva;
-total =  subtotal - descuento + iva
-$("#subtotal_text").text(subtotal);
-$("#iva_text").text(Iva);
-$("#total_text").text(total);
+}
+
+}
+
+} else {
+
+descuento = 0;
+}
+
+
+Iva = (subtotal - descuento) * iva;
+total =  subtotal - descuento + Iva
+
+$("#subtotal_input").val(subtotal);
+$("#descuento_input").val(descuento);
+$("#iva_input").val(Iva);
+$("#total_input").val(total);
+
+
+
+$("#subtotal_text").text(" $"+subtotal.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ","));
+$("#descuento_text").text(" $"+descuento.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ","));
+$("#iva_text").text(" $"+Iva.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ","));
+$("#total_text").text(" $"+total.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ","));
+
+
+
+
 
 
 contador++;
@@ -502,6 +610,59 @@ contador++;
 
 
 });
+$("#tableProductos").on('click','#quitar',function(){
+
+
+
+var restar_importe = $(this).closest('tr').find("td:nth-child(7)").children("input").val();
+
+$(this).closest('tr').remove();
+
+subtotal = subtotal - restar_importe;
+if($("#aplicar_descuento").is(":checked")){
+
+console.log("entra descuento");
+descuento = ($("#descuento").val())/100;
+descuento = subtotal * descuento;
+
+} else {
+
+descuento = 0;
+}
+
+
+Iva = (subtotal - descuento) * iva;
+total =  subtotal - descuento + Iva
+
+
+$("#subtotal_input").val(subtotal);
+$("#descuento_input").val(descuento);
+$("#iva_input").val(Iva);
+$("#total_input").val(total);
+
+
+
+
+$("#subtotal_text").text(" $"+subtotal.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ","));
+$("#descuento_text").text(" $"+descuento.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ","));
+$("#iva_text").text(" $"+Iva.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ","));
+$("#total_text").text(" $"+total.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ","));
+
+
+});
+
+
+
+
+
+
+
+
+
+
+
+
+
 });
 </script>
 

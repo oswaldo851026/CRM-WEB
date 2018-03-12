@@ -15,7 +15,7 @@ protected $fillable = [
     'asunto',
     'estatus',
     'comentarios',
-    'direccion_envio'
+    'direccion_envio',
     'subotal',
     'iva',
     'descuento',

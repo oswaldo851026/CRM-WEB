@@ -32,7 +32,7 @@ class PedidosController extends Controller
       $idusuario = Sentry::getUser()->id;
       $idperfil = Sentry::getUser()->id_perfil; 
       $listaPedidos = DB::table('pedidos')
-      ->select("pedidos.id as idpedidos", "pedidos.*", "clientes.razon_social as nombreclientes, user.first_name")
+      ->select("pedidos.id as idpedidos", "pedidos.*", "clientes.razon_social", "users.first_name")
       ->leftJoin('clientes','pedidos.id_cliente','clientes.id')
       ->leftJoin('users','pedidos.id_usuario','users.id');
       if(!empty($busqueda)) { 
@@ -89,7 +89,85 @@ class PedidosController extends Controller
      */
     public function store(Request $request)
     {
-        //
+      if (Sentry::check()){ 
+        $idusuario = Sentry::getUser()->id;
+        $idperfil = Sentry::getUser()->id_perfil; 
+       $pedidos = new Pedidos();
+       if($request->optradio == "nuevo") {
+        $cliente_nuevo = New Clientes();
+        $cliente_nuevo->nombre = $request->nombre_contacto;
+        $cliente_nuevo->apellidos = $request->apellidos_contacto;
+        $cliente_nuevo->razon_social = $request->razon_social;
+        $cliente_nuevo->telefono = $request->telefono;
+        $cliente_nuevo->direccion = $request->direccion;
+        $cliente_nuevo->descuento = $request->descuento;
+        $cliente_nuevo->save();
+        $id_cliente = $cliente_nuevo->id; 
+
+       }
+       if($request->optradio == "existente") {
+        $datos_cliente = json_decode($request->datos_cliente);
+        $id_cliente = $datos_cliente->idcliente; 
+       }
+    
+     $pedidos->id_cliente = $id_cliente;
+     $pedidos->id_usuario = $idusuario;
+     $pedidos->asunto = $request->asunto;
+     $pedidos->estatus = $request->estatus;
+     $pedidos->comentarios = $request->comentarios;
+     $pedidos->id_vendedor = $request->id_vendedor;
+     $pedidos->metodo_pago = $request->metodo_pago;
+     $pedidos->direccion_envio = $request->direccion_envio;
+     $fecha_entrega = date("Y-m-d",strtotime($request->fecha_entrega));
+     $pedidos->fecha_entrega = $fecha_entrega;
+     $pedidos->subtotal = $request->subtotal;
+     $pedidos->descuento = $request->descuento;
+     $pedidos->iva = $request->iva;
+     $pedidos->total = $request->total;
+
+     if($pedidos->save()){
+     
+      if(sizeof($request->idproducto)>0){
+      $this->insertarDetallePedidos($request, $pedidos->id, 1);
+      }
+      //$this->actualizarExistencias($request,  $pedidos->id);
+
+     }
+
+
+      return redirect("pedidos");
+      } else {
+
+      return View('sentinel.sessions.login');
+       }
+
+    }
+
+    public function insertarDetallePedidos(Request $request, $idpedido,  $tipo){ //tipo = 1 es insertar el 2 es para editar.
+
+    foreach($request->idproducto as $idproducto){
+    $detalle_pedido = new Detalle_pedido();
+    $detalle_pedido->id_pedido = $idpedido;
+    $detalle_pedido->id_producto = $idproducto;
+    $detalle_pedido->nombre_producto = $request->producto_ + $idproducto;
+    $detalle_pedido->descripcion_producto = $request->descripcion_ + $idproducto;
+    $cantidad = $request->cantidad_ + $idproducto;
+    $detalle_pedido->cantidad_producto = $cantidad;
+   // $precio = db::table('productos')->select("precio")->where("id", $idproducto)->first()->precio;
+    $precio = $request->precio_ + $idproducto;
+    $detalle_pedido->precio_producto = $precio;
+    $importe = $cantidad * $precio;
+    $detalle_pedido->importe = $importe;
+    $detalle_pedido->save();
+
+    }
+
+
+    }
+
+    public function actualizarExistencias(Request $request, $idpedido){
+
+
     }
 
     /**

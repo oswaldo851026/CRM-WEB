@@ -60,7 +60,7 @@
             <tr>
     					<td style = "width:10%;">{{$row->idpedidos}}</td>
     					<td style = "width:10%;">{{$row->asunto}}</td>
-    					<td style = "width:10%;">{{$row->nombreclientes}}</td>
+    					<td style = "width:10%;">{{$row->razon_social}}</td>
     					<td style = "width:10%;">{{$row->first_name}}</td>
     					<td style = "width:10%;">{{$row->created_at}}</td>
     					<td style = "width:10%;">{{$row->updated_at}}</td>
