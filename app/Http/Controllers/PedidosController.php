@@ -9,6 +9,7 @@ use App\Detalle_pedido;
 use App\Productos;
 use DB;
 use Sentry;
+use Illuminate\Support\Facades\Input;
 
 
 
@@ -145,19 +146,33 @@ class PedidosController extends Controller
 
     public function insertarDetallePedidos(Request $request, $idpedido,  $tipo){ //tipo = 1 es insertar el 2 es para editar.
 
+   if($tipo == 2){
+
+   //foreach($request->idproducto as $idproducto){
+      //Productos::where("id" => $id)->update(['existencias' => (Input::get('cantidad_'.$idproducto) +  )])
+
+  //  }
+
+
+    Detalle_pedido::where("id_pedido", $idpedido)->delete();
+
+   }
+
+
     foreach($request->idproducto as $idproducto){
     $detalle_pedido = new Detalle_pedido();
     $detalle_pedido->id_pedido = $idpedido;
     $detalle_pedido->id_producto = $idproducto;
-    $detalle_pedido->nombre_producto = $request->producto_ + $idproducto;
-    $detalle_pedido->descripcion_producto = $request->descripcion_ + $idproducto;
-    $cantidad = $request->cantidad_ + $idproducto;
+    $detalle_pedido->nombre_producto = Input::get('producto_'.$idproducto);
+    $detalle_pedido->descripcion_producto = Input::get('descripcion_'.$idproducto);
+    $cantidad = Input::get('cantidad_'.$idproducto);
     $detalle_pedido->cantidad_producto = $cantidad;
    // $precio = db::table('productos')->select("precio")->where("id", $idproducto)->first()->precio;
-    $precio = $request->precio_ + $idproducto;
+    $precio = Input::get('precio_'.$idproducto);
     $detalle_pedido->precio_producto = $precio;
     $importe = $cantidad * $precio;
     $detalle_pedido->importe = $importe;
+    //$this->actualizarExistencias($idpedido, $cantidad, $idproducto, $tipo);
     $detalle_pedido->save();
 
     }
@@ -165,8 +180,9 @@ class PedidosController extends Controller
 
     }
 
-    public function actualizarExistencias(Request $request, $idpedido){
-
+    public function actualizarExistencias($idpedido, $cantidad, $idproducto, $tipo){
+      
+      Productos::where($)
 
     }
 
@@ -187,9 +203,30 @@ class PedidosController extends Controller
      * @param  \App\Pedidos  $pedidos
      * @return \Illuminate\Http\Response
      */
-    public function edit(Pedidos $pedidos)
+    public function edit($idpedido)
     {
-        //
+      
+
+      $pedidos = Pedidos::find($idpedido);
+      $detalle_pedidos = Detalle_pedido::where("id_pedido", $idpedido)->get();
+
+       if (Sentry::check()){ 
+        $idusuario = Sentry::getUser()->id;
+        $idperfil = Sentry::getUser()->id_perfil; 
+        $lista_usuarios =  DB::table('users')->get();
+        $clientes = Clientes::all();
+        $productos = productos::all();
+        return view('pedidos.edit',['idusuario'=>$idusuario, 'idperfil' => $idperfil, 'lista_usuarios' => $lista_usuarios, 'clientes'=>$clientes, "productos"=> $productos, "pedidos"=>$pedidos, "detalle_pedidos" => $detalle_pedidos]);
+       } else {
+
+        return View('sentinel.sessions.login');
+
+       }
+
+
+
+
+
     }
 
     /**
@@ -199,9 +236,52 @@ class PedidosController extends Controller
      * @param  \App\Pedidos  $pedidos
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Pedidos $pedidos)
+    public function update(Request $request, $id)
     {
-        //
+        
+      
+      if (Sentry::check()){ 
+        $idusuario = Sentry::getUser()->id;
+        $idperfil = Sentry::getUser()->id_perfil; 
+       $pedidos = Pedidos::findOrFail($id);
+     
+       $datos_cliente = json_decode($request->datos_cliente);
+        $id_cliente = $datos_cliente->idcliente; 
+
+     $pedidos->id_cliente = $id_cliente;
+     $pedidos->id_usuario = $idusuario;
+     $pedidos->asunto = $request->asunto;
+     $pedidos->estatus = $request->estatus;
+     $pedidos->comentarios = $request->comentarios;
+     $pedidos->id_vendedor = $request->id_vendedor;
+     $pedidos->metodo_pago = $request->metodo_pago;
+     $pedidos->direccion_envio = $request->direccion_envio;
+     $fecha_entrega = date("Y-m-d",strtotime($request->fecha_entrega));
+     $pedidos->fecha_entrega = $fecha_entrega;
+     $pedidos->subtotal = $request->subtotal;
+     $pedidos->descuento = $request->descuento;
+     $pedidos->iva = $request->iva;
+     $pedidos->total = $request->total;
+
+     if($pedidos->save()){
+     
+      if(sizeof($request->idproducto)>0){
+      $this->insertarDetallePedidos($request, $pedidos->id, 2);
+      }
+      
+
+     }
+
+
+      return redirect("pedidos");
+      } else {
+
+      return View('sentinel.sessions.login');
+       }
+
+
+
+
     }
 
     /**
@@ -210,8 +290,17 @@ class PedidosController extends Controller
      * @param  \App\Pedidos  $pedidos
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Pedidos $pedidos)
+    public function destroy($id)
     {
-        //
+        $pedidos = Pedidos::findOrFail($id);
+     if ($pedidos->delete()) {
+        return redirect("pedidos")->with(['mensaje_eliminarProspecto', 'Un producto ha sido eliminado']);
+      } else {
+
+      return redirect("pedidos")->with('mensaje_eliminarProspecto2', 'El producto no pudo ser eliminado');
+    }
+
+
+
     }
 }

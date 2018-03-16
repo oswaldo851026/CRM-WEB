@@ -366,7 +366,7 @@
     <input type="hidden" name="descuento" id="descuento_input" val= 0> 
     <h4><strong>Iva:</strong><span id=iva_text  > </span ></h4>
     <input type="hidden" name="iva" id="iva_input" val= 0> 
-    <h4><strong>Total:</strong><span id=total_text> </span  > </h4>
+    <h4><strong>Total:</strong><span id=total_text> </span  ></h4>
     <input type="hidden" name="total" id="total_input" val= 0> 
     </div>
     <div class="col-xs-1"></div>
@@ -514,7 +514,7 @@ $('#row_Nohay').remove();
 $('#tableProductos').append(
       '<tr>'
       //btnquitar
-      +'<td><button type= "button" class= "btn btn-warning quitar" id="quitar">quitar</button></td>'
+      +'<td><button type= "button" class= "btn btn-danger quitar" id="quitar"><i class="glyphicon glyphicon-remove"></i></button></td>'
       //idproducto
       +'<td id="idproducto_'+contador+'">'+idproducto
       +'<input name="idproducto[]" type="hidden" value= "'+idproducto+'">'
