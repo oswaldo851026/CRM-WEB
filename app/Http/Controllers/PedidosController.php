@@ -7,9 +7,9 @@ use App\Clientes;
 use App\User;
 use App\Detalle_pedido;
 use App\Productos;
-use DB;
 use Sentry;
 use Illuminate\Support\Facades\Input;
+use Illuminate\Support\Facades\DB;
 
 
 
@@ -129,7 +129,7 @@ class PedidosController extends Controller
      if($pedidos->save()){
      
       if(sizeof($request->idproducto)>0){
-      $this->insertarDetallePedidos($request, $pedidos->id, 1);
+      $this->insertarDetallePedidos($request, $pedidos->id, 1, $request->estatus);
       }
       //$this->actualizarExistencias($request,  $pedidos->id);
 
@@ -144,14 +144,9 @@ class PedidosController extends Controller
 
     }
 
-    public function insertarDetallePedidos(Request $request, $idpedido,  $tipo){ //tipo = 1 es insertar el 2 es para editar.
+    public function insertarDetallePedidos(Request $request, $idpedido,  $tipo, $estatus){ //tipo = 1 es insertar el 2 es para editar.
 
    if($tipo == 2){
-
-   //foreach($request->idproducto as $idproducto){
-      //Productos::where("id" => $id)->update(['existencias' => (Input::get('cantidad_'.$idproducto) +  )])
-
-  //  }
 
 
     Detalle_pedido::where("id_pedido", $idpedido)->delete();
@@ -167,12 +162,14 @@ class PedidosController extends Controller
     $detalle_pedido->descripcion_producto = Input::get('descripcion_'.$idproducto);
     $cantidad = Input::get('cantidad_'.$idproducto);
     $detalle_pedido->cantidad_producto = $cantidad;
-   // $precio = db::table('productos')->select("precio")->where("id", $idproducto)->first()->precio;
-    $precio = Input::get('precio_'.$idproducto);
+    $precio = db::table('productos')->select("precio")->where("id", $idproducto)->first()->precio;
+    //$precio = Input::get('precio_'.$idproducto);
     $detalle_pedido->precio_producto = $precio;
     $importe = $cantidad * $precio;
     $detalle_pedido->importe = $importe;
-    //$this->actualizarExistencias($idpedido, $cantidad, $idproducto, $tipo);
+    if($estatus == "enviado"){
+    $this->actualizarExistencias($idpedido, $cantidad, $idproducto, $tipo);
+    }
     $detalle_pedido->save();
 
     }
@@ -181,8 +178,23 @@ class PedidosController extends Controller
     }
 
     public function actualizarExistencias($idpedido, $cantidad, $idproducto, $tipo){
-      
-      Productos::where($)
+    
+   if($tipo == 1){
+    $info_producto =  DB::table('productos')->where("id", $idproducto)->first();
+
+    $existencia_producto = $info_producto->existencias;
+
+     if($existencia_producto >  $cantidad) {     
+    $actualizar_existencia =  $existencia_producto - $cantidad;
+    Productos::where("id", $idproducto)->update(['existencias' => $actualizar_existencia ]);
+    } 
+    }
+
+   if($tipo == 2){
+
+    }
+
+  
 
     }
 
@@ -214,7 +226,8 @@ class PedidosController extends Controller
         $idusuario = Sentry::getUser()->id;
         $idperfil = Sentry::getUser()->id_perfil; 
         $lista_usuarios =  DB::table('users')->get();
-        $clientes = Clientes::all();
+        
+       $clientes = Clientes::all();
         $productos = productos::all();
         return view('pedidos.edit',['idusuario'=>$idusuario, 'idperfil' => $idperfil, 'lista_usuarios' => $lista_usuarios, 'clientes'=>$clientes, "productos"=> $productos, "pedidos"=>$pedidos, "detalle_pedidos" => $detalle_pedidos]);
        } else {
@@ -263,7 +276,7 @@ class PedidosController extends Controller
      $pedidos->iva = $request->iva;
      $pedidos->total = $request->total;
 
-     if($pedidos->save()){
+     if($pedidos->update()){
      
       if(sizeof($request->idproducto)>0){
       $this->insertarDetallePedidos($request, $pedidos->id, 2);

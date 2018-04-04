@@ -92,7 +92,7 @@
             <option value= "">Eliga una opción</option>
          
             @foreach ($categorias as $row)
-            <?php $selected = ""; if($producto->id_categoria == $row->id) {$selected = "selected";} ?>
+            <?php $selected = ""; if($id_categoria == $row->id) {$selected = "selected";} ?>
 		    <option {{$selected}} value= "{{$row->id}}">{{$row->nombre}}</option>
 		      @endforeach
 			</select> <br/>

@@ -65,7 +65,7 @@
     					<td style = "width:10%;">{{$row->created_at}}</td>
     					<td style = "width:10%;">{{$row->updated_at}}</td>
     					<td style = "width:10%;">{{$row->estatus}}</td>
-              <td style = "width:10%;">{{$row->total}}</td>
+              <td style = "width:10%;">${{number_format($row->total)}}</td>
     					<td style = "width:20%;" class="text-center table-crud-options"> 
            
               <form action= "{{url('pedidos/'.$row->idpedidos)}}" method= "post">

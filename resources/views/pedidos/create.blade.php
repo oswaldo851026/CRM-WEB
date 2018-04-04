@@ -479,7 +479,7 @@ $("#descuento").val(cliente.descuento);
 
 
 
-$("#btnagregar").on("click", function(add){
+$("#btnagregar").on("click change", function(add){
 var datos = $("#datos_producto").val();
 var cantidad = $("#cantidad").val();
 if(datos == "" ) {
@@ -490,7 +490,11 @@ return false
 
 }
 datos =	JSON.parse(datos);
-if(datos.existencias < cantidad) {
+console.log(datos.existencias);
+console.log(cantidad);
+var existencia = parseInt(datos.existencias);
+cantidad = parseInt(cantidad);
+if(existencia < cantidad) {
 
 alert("No hay suficientes existencias para el producto " + datos.nombre);
 add.preventDefault();

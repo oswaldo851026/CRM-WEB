@@ -131,6 +131,7 @@ class ProductosController extends Controller
      $categorias = DB::table('categorias')->get();
      $editar_producto =Productos::findOrFail($id);
      $proveedores = DB::table('proveedores')->get();
+    
      return view('productos.edit',['categorias'=>$categorias, 'proveedores'=>$proveedores, 'idusuario'=>$idusuario, 
         'producto'=> $editar_producto]);
 

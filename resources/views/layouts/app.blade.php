@@ -126,9 +126,9 @@
           Compras <b class="caret"></b>
         </a>
         <ul class="dropdown-menu">
-          <li><a class="dropdown-item" href="compras/solicitud.php">Lista de ordenes de compra</a></li>
+          <li><a class="dropdown-item" href="{{ url('compras') }}">Lista de ordenes de compra</a></li>
           <li class="divider"></li>
-          <li><a class="dropdown-item"  href="compras/Revisar.php">Nueva Orden de compra</a></li>
+          <li><a class="dropdown-item"  href="{{ url('compras/create') }}">Nueva Orden de compra</a></li>
           
           
         </ul>

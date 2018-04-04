@@ -17,16 +17,16 @@
         <div class="row">
             <div class="col-md-12">
                 <div class="panel panel-default">
-	         <div class="panel-heading">Productos</div>
+	         <div class="panel-heading">Compra</div>
           <div class="panel-body">
            <div class="col-md-6">
-           <a href="{{ url('productos/create') }}" class="btn btn-success btn-sm" title="Agregar un nuevo producto">
+           <a href="{{ url('compras/create') }}" class="btn btn-success btn-sm" title="Agregar un nuevo pedido">
                             <i class="fa fa-plus" aria-hidden="true"></i> Agregar 
              </a>
             <br>
            </div>
               <div class="col-md-6">
-             <form method="GET" action="{{ url('productos') }}" accept-charset="UTF-8" class="navbar-form navbar-right" role="search">
+             <form method="GET" action="{{ url('compras') }}" accept-charset="UTF-8" class="navbar-form navbar-right" role="search">
                             <div class="input-group">
                                 <input type="text" class="form-control" name="search" placeholder="Buscar..." value="{{ request('search') }}">
                                 <span class="input-group-btn">
@@ -43,35 +43,37 @@
 			      <table class="table-bordered table-striped table-condensed table-hover" style= "width:100%;">
             <thead>
             <tr>
-			      <th>id</th>
-            <th>codigo</th>
-            <th>nombre</th>
-            <th>categoria</th>
-            <th>descripcion</th>
-            <th>proveedor</th>
-            <th>precio</th>
+			      <th>Folio</th>
+            <th>Asunto</th>
+            <th>Cliente</th>
+            <th>Almacen</th>
+            <th>Creado</th>
+            <th>Modificado</th>
+            <th>Estatus</th>
+            <th>Total</th>
             <th class="text-center">Acciones</th>
             </tr>
           </thead>
           <tbody>
-            <?php if (count($listaProductos) > 0): ?>
-          <?php foreach ($listaProductos as $row): ?>
+            <?php if (count($listaPedidos) > 0): ?>
+          <?php foreach ($listaPedidos as $row): ?>
             <tr>
-    					<td style = "width:10%;">{{$row->idproductos}}</td>
-    					<td style = "width:10%;">{{$row->codigo}}</td>
-    					<td style = "width:10%;">{{$row->nombre}}</td>
-    					<td style = "width:10%;">{{$row->nombrecategoria}}</td>
-    					<td style = "width:10%;">{{$row->descripcion}}</td>
-    					<td style = "width:10%;">{{$row->nombreproveedor}}</td>
-    					<td style = "width:10%;">${{number_format($row->precio)}}</td>
+    					<td style = "width:10%;">{{$row->idcompras}}</td>
+    					<td style = "width:10%;">{{$row->asunto}}</td>
+    					<td style = "width:10%;">{{$row->razon_social}}</td>
+    					<td style = "width:10%;">{{$row->first_name}}</td>
+    					<td style = "width:10%;">{{$row->created_at}}</td>
+    					<td style = "width:10%;">{{$row->updated_at}}</td>
+    					<td style = "width:10%;">{{$row->estatus}}</td>
+              <td style = "width:10%;">{{$row->total}}</td>
     					<td style = "width:20%;" class="text-center table-crud-options"> 
            
-              <form action= "{{url('productos/'.$row->idproductos)}}" method= "post">
+              <form action= "{{url('compras/'.$row->idcompras)}}" method= "post">
               <input type="hidden" name="_method" value="DELETE">
               <input type="hidden" name="_token" value="{{ csrf_token() }}">
               <div class="btn-group">
-              <a href="{{url('productos/'.$row->idproductos)}}" class="btn btn-primary"><i class="glyphicon glyphicon-eye-open"></i></a>
-    					<a href="{{url('productos/'.$row->idproductos.'/edit')}}" class="btn btn-warning"><i class="glyphicon glyphicon-pencil"></i></a>
+              <a href="{{url('compras/'.$row->idcompras)}}" class="btn btn-primary"><i class="glyphicon glyphicon-eye-open"></i></a>
+    					<a href="{{url('compras/'.$row->idcompras.'/edit')}}" class="btn btn-warning"><i class="glyphicon glyphicon-pencil"></i></a>
               <button type="submit" class="btn btn-danger"><i class="glyphicon glyphicon-remove"></i></button>
               </form>
               </td>
@@ -89,7 +91,7 @@
 			  
 			    <div class="box-footer clearfix">
             <div class= col-xs-12>
-                 {{$listaProductos->render()}}
+                 {{$listaPedidos->render()}}
 
          		</div>
 				</div>
