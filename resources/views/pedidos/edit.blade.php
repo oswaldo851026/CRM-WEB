@@ -275,7 +275,13 @@
 	
         <div class="col-xs-12 ">
 			<h3>Detalles del pedido</h3> 
-			<div class="checkbox "> 	
+		
+     <?php if($pedidos->estatus != "enviado" && $pedidos->estatus != "pagado") {
+   
+     $disabledbtn = "";  ?>
+
+
+    <div class="checkbox "> 	
 		<label >  <input class= "" tabindex="22" name="aplicar_descuento" type="checkbox" id="aplicar_descuento" value="1">Aplicar descuento</label> 
      </div> 
  	
@@ -292,7 +298,9 @@
         <div class="form-group" >
 		<div class="col-lg-12">
 		<label for="producto" class="col-lg-10">Producto</label>
-		 <select class="select2 form-control cliente_input2" tabindex="21" name="datos_producto" id="datos_producto" >
+		
+
+     <select class="select2 form-control cliente_input2" tabindex="21" name="datos_producto" id="datos_producto" >
         <option value= ''>Seleccione un producto </option>
           
             @foreach($productos as $r) 
@@ -319,8 +327,14 @@
      </div>  
    
      <div class="col-xs-6">
+        
+       
+
       <button  id="btnagregar" style="margin-top: 5%; margin-left: -5%;"  tabindex="23" type="button" class="btn btn-success btn-sm">Agregar</button> 
      </div>  
+
+  <?php }else{$disabledbtn = "disabled";} ?>
+
           <div class="col-md-12">
        <div class="col-md-12">
        <br/> 
@@ -474,6 +488,8 @@ return false
 
 }
 datos =	JSON.parse(datos);
+
+  /// ------------------------VALIDACION DE EXISTENCIAS -----------------------
 if(datos.existencias < cantidad) {
 
 alert("No hay suficientes existencias para el producto " + datos.nombre);
@@ -498,7 +514,7 @@ $('#row_Nohay').remove();
 $('#tableProductos').append(
       '<tr>'
       //btnquitar
-      +'<td><button type= "button" class= "btn btn-danger quitar" id="quitar"><i class="glyphicon glyphicon-remove"></i></button></td>'
+      +'<td><button type= "button" class= "btn btn-danger quitar '+<?php echo $disabledbtn; ?>+ '" id="quitar"><i class="glyphicon glyphicon-remove"></i></button></td>'
       //idproducto
       +'<td id="idproducto_'+contador+'">'+idproducto
       +'<input name="idproducto[]" type="hidden" value= "'+idproducto+'">'
@@ -524,10 +540,6 @@ $('#tableProductos').append(
       +'<td class=".importe" id="importe_td_'+idproducto+'">'+" $"+parseFloat(importe).toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ",")
       +'<input  id="importe" name="importe_'+idproducto+'" type="hidden" value= "'+importe+'">'
       + '</td>'
-
-
-
-
 
 
       

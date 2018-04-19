@@ -94,9 +94,12 @@ class MateriaPrimaController extends Controller
     {
     
     $materiasprimas = new Materia_Prima($request->all());
+    $materiasprimas->codigo = "MP";
   
 
     if($materiasprimas->save()){
+    $materiasprimas->codigo = "MP".$materiasprimas->id;
+    $materiasprimas->save();
           session()->flash('crearmateria', "ha sido creado");
           return redirect("materiaprima");
       }else{

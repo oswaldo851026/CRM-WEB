@@ -77,6 +77,7 @@ class ProductosController extends Controller
     {
     
     $productos = new Productos($request->all());
+    $productos->codigo = "Prod";
   
     if(Input::hasFile('imagen_principal')){
             $imagen=Input::file('imagen_principal');
@@ -87,6 +88,10 @@ class ProductosController extends Controller
         }
 
     if($productos->save()){
+       
+      $productos->codigo = "Prod".$productos->id;
+      $productos->save();
+
           session()->flash('crearProducto', "Un producto ha sido creado");
           return redirect("productos");
       }else{

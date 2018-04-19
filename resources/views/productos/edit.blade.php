@@ -67,8 +67,8 @@
 		<div class="col-xs-6">
       <div class="form-group" >
 			<div class="col-lg-12">
-			<label for="codigo" class="col-lg-10">*codigo</label>
-			<input type="text" tabindex="2" name="codigo" value="{{$producto->codigo}}" id= 'email' class="form-control" placeholder="codigo" required> <br/>
+			<label for="codigo" class="col-lg-10">codigo</label>
+			<input type="text" disabled  tabindex="2" name="codigo" value="{{$producto->codigo}}" id= 'email' class="form-control" placeholder="codigo"> <br/>
 			</div>
 			</div>
      <div class="form-group" >

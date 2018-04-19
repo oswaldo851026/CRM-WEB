@@ -144,7 +144,7 @@ class PedidosController extends Controller
 
     }
 
-    public function insertarDetallePedidos(Request $request, $idpedido,  $tipo, $estatus){ //tipo = 1 es insertar el 2 es para editar.
+    public function insertarDetallePedidos(Request $request, $idpedido,  $tipo, $estatus, $estatus_anterior = false){ //tipo = 1 es insertar el 2 es para editar.
 
    if($tipo == 2){
 
@@ -167,7 +167,8 @@ class PedidosController extends Controller
     $detalle_pedido->precio_producto = $precio;
     $importe = $cantidad * $precio;
     $detalle_pedido->importe = $importe;
-    if($estatus == "enviado"){
+    if($estatus == "enviado" && $estatus_anterior <> "enviado" && $estatus_anterior <> "pagado" && $estatus_anterior <> "cancelado"){
+           
     $this->actualizarExistencias($idpedido, $cantidad, $idproducto, $tipo);
     }
     $detalle_pedido->save();
@@ -184,13 +185,19 @@ class PedidosController extends Controller
 
     $existencia_producto = $info_producto->existencias;
 
-     if($existencia_producto >  $cantidad) {     
+     if($existencia_producto >  $cantidad) {  
+
+    $estatus_anterior  = 
+
+
     $actualizar_existencia =  $existencia_producto - $cantidad;
     Productos::where("id", $idproducto)->update(['existencias' => $actualizar_existencia ]);
     } 
     }
 
    if($tipo == 2){
+
+    
 
     }
 
@@ -256,6 +263,7 @@ class PedidosController extends Controller
       if (Sentry::check()){ 
         $idusuario = Sentry::getUser()->id;
         $idperfil = Sentry::getUser()->id_perfil; 
+        $estatus_anterior =  DB::table('pedidos')->where("id", $id)->first()->estatus;
        $pedidos = Pedidos::findOrFail($id);
      
        $datos_cliente = json_decode($request->datos_cliente);
@@ -279,7 +287,8 @@ class PedidosController extends Controller
      if($pedidos->update()){
      
       if(sizeof($request->idproducto)>0){
-      $this->insertarDetallePedidos($request, $pedidos->id, 2);
+      $this->insertarDetallePedidos($request, $pedidos->id, 2, $request->estatus, $estatus_anterior);
+
       }
       
 

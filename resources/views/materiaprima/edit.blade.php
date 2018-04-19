@@ -80,8 +80,8 @@
 		<div class="col-xs-6">
       <div class="form-group" >
 			<div class="col-lg-12">
-			<label for="codigo" class="col-lg-10">*codigo</label>
-			<input type="text" tabindex="2" name="codigo" id= 'codigo' class="form-control" placeholder="codigo" value="{{$materiasprimas->codigo}}" required> <br/>
+			<label for="codigo" class="col-lg-10">codigo</label>
+			<input disabled type="text" tabindex="2" name="codigo" id= 'codigo' class="form-control" placeholder="codigo" value="{{$materiasprimas->codigo}}" required> <br/>
 			</div>
 			</div>
      <div class="form-group" >

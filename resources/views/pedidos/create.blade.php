@@ -442,11 +442,14 @@ $("#descuento").val(cliente.descuento);
 $(".cliente_div").hide();
 $(".cliente_input").attr("disabled", "disabled");
 $(".cliente_select").show();
+$(".cliente_input2").removeAttr("disabled", "disabled");
+
 } 
 if(valrad == "nuevo"){
 $("#descuento").val(0);	
 $(".cliente_div").show();
 $(".cliente_input").removeAttr("disabled", "disabled");
+$(".cliente_input2").attr("disabled", "disabled");
 
 $(".cliente_select").hide();
 }

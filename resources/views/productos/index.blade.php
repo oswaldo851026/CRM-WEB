@@ -57,7 +57,7 @@
             <?php if (count($listaProductos) > 0): ?>
           <?php foreach ($listaProductos as $row): ?>
             <tr>
-    					<td style = "width:10%;">{{$row->idproductos}}</td>
+    					<td style = "width:10%;">Prod{{$row->idproductos}}</td>
     					<td style = "width:10%;">{{$row->codigo}}</td>
     					<td style = "width:10%;">{{$row->nombre}}</td>
     					<td style = "width:10%;">{{$row->nombrecategoria}}</td>

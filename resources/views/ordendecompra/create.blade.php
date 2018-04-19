@@ -71,8 +71,8 @@
 			<div class="col-lg-12">
 			<label for="estatus" class="col-lg-10">Estatus</label>
 			<select type="text" tabindex="3" name="estatus" id= 'estatus' class="form-control"  >
-            <option value= "urgente">Urgente</option>
-            <option value= "no urgente">No urgente</option>
+            <option value= "creado">Creado</option>
+            <option value= "enAlmacen">En almacén</option>
 			</select> <br/>
 			</div>
 	        </div>
@@ -262,7 +262,7 @@
 
 			 <div class="form-group" >
 			<div class="col-lg-12">
-		<div class="col-lg-12"> <label for="periodo" ><strong>Fecha de entrega Sugerida</strong></label> </div>
+		<div class="col-lg-12"> <label for="periodo" ><strong>Fecha de recepción</strong></label> </div>
       <div class="input-group date form-group " id="enddate" data-date-orientation= "bottom" data-date-autoclose= true data-provide="datepicker" data-date-start-date="default" >
       <input required class="form-control fechaFin " placeholder= "fecha_entrega"  type="text"  name="fecha_entrega" id= 'fin' class="form-control datepicker " tabindex="19"><div class="input-group-addon">
       <span class="glyphicon glyphicon-calendar"></span>
@@ -281,7 +281,7 @@
 	 <div class="col-xs-12 ">
 	
         <div class="col-xs-12 ">
-			<h3>Detalles del pedido</h3> 
+			<h3>Detalles de la compra</h3> 
 			
  	
     </div>	
@@ -296,11 +296,11 @@
 
         <div class="form-group" >
 		<div class="col-lg-12">
-		<label for="producto" class="col-lg-10">Producto</label>
-		 <select class="select2 form-control cliente_input2" tabindex="21" name="datos_producto" id="datos_producto" required>
+		<label for="producto" class="col-lg-10">Materia prima</label>
+		 <select class="select2 form-control " tabindex="21" name="datos_producto" id="datos_producto" required>
             <option value= "" >Seleccione una opción </option>
-            @foreach($productos as $r) 
-            <option value= '{"idproducto":"{{$r->id}}","nombre":"{{$r->nombre}}", "descripcion":"{{$r->descripcion}}" , "precio": "{{$r->precio}}", "existencias": "{{$r->existencias}}"}'>{{$r->id}}: {{$r->nombre}} ({{$r->existencias}}) </option>
+            @foreach($materias_primas as $r) 
+            <option value= '{"idmateria_prima":"{{$r->id}}","nombre":"{{$r->nombre}}", "descripcion":"{{$r->descripcion}}" , "costo": "{{$r->costo}}", "existencias": "{{$r->existencias}}"}'>{{$r->id}}: {{$r->nombre}} ({{$r->existencias}}) </option>
             @endforeach
 
 </select>
@@ -336,7 +336,7 @@
             <th>Clave</th>
             <th>Nombre</th>
             <th>Descripción</th>
-            <th>Precio</th>
+            <th>Costo</th>
             <th>Cantidad</th>
             <th>Importe</th>
             </tr>
@@ -378,7 +378,7 @@
 	 <button type="submit" class="btn btn-success btn-lg glyphicon glyphicon-shopping-cart" ></button>
 	 <br>
 	 <br>
-	 <a href= {{ url('productos') }}  type="submit" class="btn btn-default">Regresar</a>
+	 <a href= {{ url('materiaprima') }}  type="submit" class="btn btn-default">Regresar</a>
 	 <button type="reset" class="btn btn-danger">Cancelar</button>
 	 <br>
  </div>
@@ -439,13 +439,16 @@ $("#descuento").val(cliente.descuento);
 
 $(".cliente_div").hide();
 $(".cliente_input").attr("disabled", "disabled");
+$(".cliente_input2").removeAttr("disabled", "disabled");
 $(".cliente_select").show();
+$(".cliente_select").show();
+
 } 
 if(valrad == "nuevo"){
 $("#descuento").val(0);	
 $(".cliente_div").show();
 $(".cliente_input").removeAttr("disabled", "disabled");
-
+$(".cliente_input2").attr("disabled", "disabled");
 $(".cliente_select").hide();
 }
 
@@ -488,24 +491,17 @@ return false
 
 }
 datos =	JSON.parse(datos);
-if(datos.existencias > cantidad) {
-
-alert("No hay suficientes existencias para la materia prima " + datos.nombre);
-add.preventDefault();
-return false
-
-}
+console.log(datos.existencias);
+console.log(cantidad);
+var existencia = parseInt(datos.existencias);
 
 
-
-
-
-var idproducto = datos.idproducto;
+var idproducto = datos.idmateria_prima;
 var nombre = datos.nombre;
-var precio= datos.precio;
+var precio= datos.costo;
 var descripcion = datos.descripcion;
 
-var importe = precio*cantidad;
+var importe = precio* cantidad;
 
 var descuento_cliente = $("#datos_producto").val();
 $('#row_Nohay').remove();

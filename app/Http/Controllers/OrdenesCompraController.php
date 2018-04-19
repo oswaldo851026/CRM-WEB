@@ -9,6 +9,7 @@ use App\detalle_ordenesCompra;
 use App\Almacen;
 use App\Clientes;
 use App\Productos;
+use App\Materia_prima;
 use DB;
 use Sentry;
 use Illuminate\Http\Request;
@@ -66,8 +67,8 @@ class OrdenesCompraController extends Controller
         // $lista_usuarios =  DB::table('users')->get();
         $almacen = DB::table('almacen')->get();
         $clientes = Proveedores::all();
-        $productos = productos::all();
-        return view('ordendecompra.create',['idusuario'=>$idusuario, 'idperfil' => $idperfil, 'almacen' => $almacen, 'clientes'=>$clientes, "productos"=> $productos]);
+        $materias_primas = Materia_prima::all();
+        return view('ordendecompra.create',['idusuario'=>$idusuario, 'idperfil' => $idperfil, 'almacen' => $almacen, 'clientes'=>$clientes, "materias_primas"=> $materias_primas]);
        } else {
 
         return View('sentinel.sessions.login');
@@ -91,7 +92,8 @@ class OrdenesCompraController extends Controller
        $pedidos = new Ordenes_compra();
        if($request->optradio == "nuevo") {
         $cliente_nuevo = New Proveedores();
-        $cliente_nuevo->nombre = $request->nombre_contacto;
+        $cliente_nuevo->nombre_contacto = $request->nombre_contacto;
+        $cliente_nuevo->apellido_contacto = $request->apellidos_contacto;
         
         $cliente_nuevo->razon_social = $request->razon_social;
         $cliente_nuevo->telefono = $request->telefono;

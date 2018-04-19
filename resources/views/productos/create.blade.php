@@ -53,7 +53,7 @@
 			<div class="form-group" >
 			<div class="col-lg-12">
 			<label for="notas" class="col-lg-10">Código de barras</label>
-			<input type="codigo_barras" tabindex="9" name="codigo_barras" id= 'codigo_barras' class="form-control" placeholder="código de barras" > <br/>
+			<input type="codigo_barras"  tabindex="9" name="codigo_barras" id= 'codigo_barras' class="form-control" placeholder="código de barras" > <br/>
 			</div>
 		</div>
 		</div>
@@ -65,8 +65,8 @@
 		<div class="col-xs-6">
       <div class="form-group" >
 			<div class="col-lg-12">
-			<label for="codigo" class="col-lg-10">*codigo</label>
-			<input type="text" tabindex="2" name="codigo" id= 'email' class="form-control" placeholder="codigo" required> <br/>
+			<label for="codigo" class="col-lg-10">codigo</label>
+			<input type="text" disabled  tabindex="2" name="codigo" id= 'email' class="form-control" placeholder="codigo" > <br/>
 			</div>
 			</div>
      <div class="form-group" >
