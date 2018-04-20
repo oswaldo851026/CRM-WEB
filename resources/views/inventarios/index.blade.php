@@ -122,7 +122,7 @@
        <div class="col-md-6">
               <div class="col-xs-6 row" style="margin-left: -9px;">
       <label for="periodo"><strong>Periodo</strong></label>
-      <div class="input-group date form-group" id="startdate" data-date-orientation= "bottom" data-date-start-date="default" data-date-autoclose= true data-provide="datepicker" data-date-format="dd-mm-yyyy">
+      <div class="input-group date form-group" id="startdate" data-date-orientation= "bottom"  data-date-autoclose= true data-provide="datepicker" data-date-format="dd-mm-yyyy">
       <input required placeholder= "Inicio" class="form-control"  type="text"  name="inicio" id= 'inicio' class="form-control datepicker inicio" tabindex="4"><div class="input-group-addon">
       <span class="glyphicon glyphicon-th"></span>
       </div>
@@ -131,7 +131,7 @@
 
       <div class="col-xs-6 pull-left">
       <label style="color:transparent;" for="periodo"><strong>Termina</strong></label>
-      <div class="input-group date form-group " id="enddate" data-date-orientation= "bottom" data-date-autoclose= true data-provide="datepicker" data-date-start-date="default" data-date-format="dd-mm-yyyy">
+      <div class="input-group date form-group " id="enddate" data-date-orientation= "bottom" data-date-autoclose= true data-provide="datepicker"  data-date-format="dd-mm-yyyy">
       <input required class="form-control fechaFin " placeholder= "Fin"  type="text"  name="fin" id= 'fin' class="form-control form_datetime" tabindex="4"><div class="input-group-addon">
       <span class="glyphicon glyphicon-th"></span>
       </div>

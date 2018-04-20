@@ -77,7 +77,7 @@ class InventariosController extends Controller
         if($producto == "todos"){
           $producto == "";
         }
-       $listaInventarios= $listaInventarios->where('inventarios.id_producto', 'like', $producto);
+       $listaInventarios= $listaInventarios->where('inventarios.id_producto', 'like', "Prod".$producto);
        if(!empty($almacen)){
        $listaInventarios= $listaInventarios->orWhere('inventarios.id_almacen', 'like', $almacen);
         }
@@ -103,7 +103,7 @@ class InventariosController extends Controller
           if($materiaprima == "todos"){
           $materiaprima == "";
         }
-       $listaInventarios2= $listaInventarios2->where('inventarios2.id_materiaPrima', 'like', $materiaprima);
+       $listaInventarios2= $listaInventarios2->where('inventarios2.id_materiaPrima', 'like', "Mp".$materiaprima);
        if(!empty($almacen)){
        $listaInventarios2= $listaInventarios2->orWhere('inventarios2.id_almacen', 'like', $almacen);
        }
@@ -152,7 +152,7 @@ class InventariosController extends Controller
      */
    
     }
-    public function storeInv(Request $request)
+    public function store(Request $request)
     {
         
          
