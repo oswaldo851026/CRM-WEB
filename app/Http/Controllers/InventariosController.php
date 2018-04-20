@@ -40,8 +40,8 @@ class InventariosController extends Controller
       $movimiento= $request->input('movimiento');  
       $producto= $request->input('busquedaproducto');  
       $almacen = $request->input('almacen');  
-      $fecha_inicio = $request->input('fecha_inicio');
-      $fecha_final =  $request->input('fecha_final');  
+      $fecha_inicio = date("Y-m-d",strtotime($request->fecha_inicio)); 
+      $fecha_final = date("Y-m-d",strtotime($request->fecha_final)); 
       $idusuario = Sentry::getUser()->id;
       $idperfil = Sentry::getUser()->id_perfil; 
       //inventarios producto
@@ -54,19 +54,24 @@ class InventariosController extends Controller
 
     
 
+      if(!empty($producto)){
+       $listaInventarios= $listaInventarios->where('inventarios.id_producto', 'like', $producto);
 
-    if($radio = "Mp"){
+       }
+
+      if(!empty($almacen)){
+       $listaInventarios= $listaInventarios->oreWhere('inventarios.id_almacen', 'like', $almacen);
+
+       }
+       if(!empty($movimiento)){
+       $listaInventarios= $listaInventarios->orWhere('inventarios.tipo_movimiento', 'like', $movimiento);
+
+       }
+      if(!empty($fecha_final)){
+       $listaInventarios= $listaInventarios->orWhereBetween('inventarios.created_at', [$fecha_inicio, $fecha_final]);
+
+       }
     
-
-    }
-
-    if($radio = "Prod"){
-
-      
-    }
-
-      
-             
       $listaInventarios= $listaInventarios->orderBy('inventarios.created_at')->paginate(10);
 
 
@@ -77,6 +82,25 @@ class InventariosController extends Controller
       ->select("inventarios2.id as idinventarios", "inventarios2.concepto",  "materia_primas.codigo" , "materia_primas.nombre" , "almacen.nombre_almacen"  , "inventarios2.cantidad", "inventarios2.tipo_movimiento", "inventarios2.created_at" )
       ->leftJoin('materia_primas','inventarios2.id_materiaPrima','materia_primas.codigo')
       ->leftJoin('almacen','inventarios2.id_almacen','almacen.id');
+
+        if(!empty($producto)){
+       $listaInventarios2= $listaInventarios2->where('inventarios2.id_materiaPrima', 'like', $producto);
+
+       }
+
+      if(!empty($almacen)){
+       $listaInventarios2= $listaInventarios2->oreWhere('inventarios2.id_almacen', 'like', $almacen);
+
+       }
+       if(!empty($movimiento)){
+       $listaInventarios2= $listaInventarios2->orWhere('inventarios2.tipo_movimiento', 'like', $movimiento);
+
+       }
+    //  if(!empty($fecha_final)){
+      // $listaInventarios2= $listaInventarios2->orWhereBetween('inventarios2.created_at', [$fecha_inicio, $fecha_final]);
+
+      // }
+    
      
       $listaInventarios2= $listaInventarios2->orderBy('inventarios2.created_at')->paginate(10);
       

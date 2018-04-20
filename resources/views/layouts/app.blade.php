@@ -157,6 +157,28 @@
       </li>
 
 @endif
+
+
+     
+@if($idperfil == 1 || $idperfil == 4) <!-- solo admin y finanzas-->
+ <li class="dropdown">
+        <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+          Finanzas <b class="caret"></b>
+        </a>
+        <ul class="dropdown-menu">
+          <li><a class="dropdown-item" href="{{ url('cuentasPorCobrar') }}">Cuentas por cobrar</a></li>
+          <li class="divider"></li>
+          <li><a class="dropdown-item"  href="{{ url('cuentasPorPagar') }}">Cuentas por pagar</a></li>
+          
+          
+        </ul>
+      </li>
+@endif
+          
+
+
+
+
                     </ul>
 
                     <!-- Right Side Of Navbar -->
@@ -226,10 +248,6 @@ $('.select2').select2();
 })
 
  </script>
-
-
-
-
 
 
 
