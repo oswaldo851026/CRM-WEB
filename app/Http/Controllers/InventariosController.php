@@ -186,6 +186,46 @@ class InventariosController extends Controller
 
     }
 
+     public function agregarRegistro(Request $request)
+    {
+        
+         
+   if(substr( $request->inputproducto , 0, 2 ) == "Pr"){
+    $registro_inventario = new Inventarios();
+    $registro_inventario->id_producto = $request->inputproducto;
+
+   } else {
+    $registro_inventario = new Inventarios2(); //materias primas
+    $registro_inventario->id_materiaPrima = $request->inputproducto;
+
+     }
+
+    $registro_inventario->concepto = "Hecha desde el panel";
+
+    if($request->tipo_movimiento == "salida"){
+      $registro_inventario->cantidad = $request->inputcantidad  - ($request->inputcantidad *2);
+    }else{
+
+      $registro_inventario->cantidad = $request->inputcantidad;
+    }
+    
+    $registro_inventario->id_almacen = $request->inputalmacen;
+    $registro_inventario->tipo_movimiento= $request->inputmovimiento;
+    $registro_inventario->save();
+
+ 
+  
+  return redirect("pedidos");
+
+
+
+    }
+
+
+
+
+
+
     /**
      * Display the specified resource.
      *

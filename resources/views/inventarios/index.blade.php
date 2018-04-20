@@ -263,8 +263,8 @@
 
 
         
- <form method="post" action="{{ url('inventarios') }}" accept-charset="UTF-8" class="" role="search">
-
+ <form method="post" action="{{ url('inventarios/agregarRegistro') }}" accept-charset="UTF-8" class="" role="search">
+ <input type="hidden" name="_token" value="{{ csrf_token() }}">
 <!-- Modal -->
 <div class="modal fade" id="exampleModal" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
   <div class="modal-dialog modal-lg" role="document">
