@@ -88,7 +88,7 @@ class InventariosController extends Controller
        $listaInventarios= $listaInventarios->orWhereBetween('inventarios.created_at', [$fecha_inicio, $fecha_final2]);
        }
        }
-      $listaInventarios= $listaInventarios->orderBy('inventarios.created_at')->paginate(10);
+      $listaInventarios= $listaInventarios->orderBy('inventarios.created_at')->paginate(20);
 
 
 
@@ -189,12 +189,64 @@ class InventariosController extends Controller
      public function agregarRegistro(Request $request)
     {
         
-         
+     
+   
+
+
+
+     
+
    if(substr( $request->inputproducto , 0, 2 ) == "Pr"){
+      $info_producto =  DB::table('productos')->where("codigo",  $request->inputproducto)->first();
+      $existencia_producto = $info_producto->existencias;
+  
+     if($existencia_producto >  $request->inputcantidad) {  
+ 
+ 
+  if($request->inputmovimiento == "salida"){
+    $actualizar_existencia =  $existencia_producto - $request->inputcantidad;
+    Productos::where("codigo", $request->inputproducto)->update(['existencias' => $actualizar_existencia ]);
+    } 
+}
+
+if($request->inputmovimiento == "entrada"){
+    $actualizar_existencia =  $existencia_producto + $request->inputcantidad;
+    Productos::where("codigo", $request->inputproducto)->update(['existencias' => $actualizar_existencia ]);
+       
+  
+    } 
+
+    
+
+
     $registro_inventario = new Inventarios();
     $registro_inventario->id_producto = $request->inputproducto;
 
    } else {
+
+
+
+
+
+      $info_mp =  DB::table('materia_primas')->where("codigo",  $request->inputproducto)->first();
+     $existencia_mp = $info_mp->existencias;
+
+         if($existencia_mp >  $request->inputcantidad) {  
+ 
+ 
+  if($request->inputmovimiento == "salida"){
+    $actualizar_existencia =  $existencia_mp - $request->inputcantidad;
+    Materia_Prima::where("codigo", $request->inputproducto)->update(['existencias' => $actualizar_existencia ]);
+    } 
+       }
+
+   if($request->inputmovimiento == "entrada"){
+    $actualizar_existencia =  $existencia_mp + $request->inputcantidad;
+    Materia_Prima::where("codigo", $request->inputproducto)->update(['existencias' => $actualizar_existencia ]);
+    }  
+
+
+
     $registro_inventario = new Inventarios2(); //materias primas
     $registro_inventario->id_materiaPrima = $request->inputproducto;
 
@@ -202,7 +254,7 @@ class InventariosController extends Controller
 
     $registro_inventario->concepto = "Hecha desde el panel";
 
-    if($request->tipo_movimiento == "salida"){
+    if($request->inputmovimiento == "salida"){
       $registro_inventario->cantidad = $request->inputcantidad  - ($request->inputcantidad *2);
     }else{
 

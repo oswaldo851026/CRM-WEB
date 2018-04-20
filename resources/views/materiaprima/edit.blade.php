@@ -114,7 +114,7 @@
          <div class="form-group" >
 			<div class="col-lg-12">
 			<label for="existencias" class="col-lg-10">Existencias</label>
-			<input type="text" readonly value= "0" tabindex="8" name="existencias" id= 'existencias' class="form-control" placeholder="" > <br/>
+			<input type="text" readonly value= "{{$materiasprimas->existencias}}" tabindex="8" name="existencias" id= 'existencias' class="form-control" placeholder="" > <br/>
 			</div>
 			</div>
 
