@@ -20,13 +20,13 @@
 	         <div class="panel-heading">Cuentas por Pagar</div>
           <div class="panel-body">
            <div class="col-md-6">
-           <a href="{{ url('pagar/create') }}" class="btn btn-success btn-sm" title="Agregar un nuevo pago">
+           <a href="{{ url('cuentasPorPagar/create') }}" class="btn btn-success btn-sm" title="Agregar un nuevo pago">
                             <i class="fa fa-plus" aria-hidden="true"></i> Agregar 
              </a>
             <br>
            </div>
               <div class="col-md-6">
-             <form method="GET" action="{{ url('pagar') }}" accept-charset="UTF-8" class="navbar-form navbar-right" role="search">
+             <form method="GET" action="{{ url('cuentasPorPagar') }}" accept-charset="UTF-8" class="navbar-form navbar-right" role="search">
                             <div class="input-group">
                                 <input type="text" class="form-control" name="search" placeholder="Buscar..." value="{{ request('search') }}">
                                 <span class="input-group-btn">
@@ -60,12 +60,12 @@
     					<td style = "width:10%;">{{$row->estatus}}</td>
     					<td style = "width:10%;">{{$row->monto}}</td>
            
-              <form action= "{{url('pagar/'.$row->idcuentas_pagar)}}" method= "post">
+              <form action= "{{url('cuentasPorpagar/'.$row->idcuentas_pagar)}}" method= "post">
               <input type="hidden" name="_method" value="DELETE">
               <input type="hidden" name="_token" value="{{ csrf_token() }}">
               <div class="btn-group">
-              <a href="{{url('pagar/'.$row->idcuentas_pagar)}}" class="btn btn-primary"><i class="glyphicon glyphicon-eye-open"></i></a>
-    					<a href="{{url('pagar/'.$row->idcuentas_pagar.'/edit')}}" class="btn btn-warning"><i class="glyphicon glyphicon-pencil"></i></a>
+              <a href="{{url('cuentasPorpagar/'.$row->idcuentas_pagar)}}" class="btn btn-primary"><i class="glyphicon glyphicon-eye-open"></i></a>
+    					<a href="{{url('cuentasPorpagar/'.$row->idcuentas_pagar.'/edit')}}" class="btn btn-warning"><i class="glyphicon glyphicon-pencil"></i></a>
               <button type="submit" class="btn btn-danger"><i class="glyphicon glyphicon-remove"></i></button>
               </form>
               </td>

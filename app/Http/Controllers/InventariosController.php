@@ -34,44 +34,60 @@ class InventariosController extends Controller
         $productos = Productos::all();
         $almacenes = Almacen::all();
          $materia_prima = Materia_Prima::all();
-      $busqueda= $request->input('search');
+
+       $optradio = $request->input('optradio'); 
+      
+       if(empty($optradio)){
+
+        $valcheck = "checked";
+        $valcheck2 = "";
+       } else if($optradio == "Prod"  ){
+        $valcheck = "checked";
+        $valcheck2 = "";
+
+       } else if($optradio == "Mp"){
+        
+        $valcheck = "";
+        $valcheck2 = "checked";
+
+       }
 
 
       $movimiento= $request->input('movimiento');  
-      $producto= $request->input('busquedaproducto');  
+      $producto= $request->input('buscarproducto'); 
+      $materiaprima= $request->input('buscarmateriaprima');   
       $almacen = $request->input('almacen');  
-      $fecha_inicio = date("Y-m-d",strtotime($request->fecha_inicio)); 
-      $fecha_final = date("Y-m-d",strtotime($request->fecha_final)); 
+      $fecha_inicio = $request->input("fecha_inicio"); 
+      $fecha_final =  $request->input("fecha_final"); 
       $idusuario = Sentry::getUser()->id;
       $idperfil = Sentry::getUser()->id_perfil; 
-      //inventarios producto
+      $fecha_inicio =  date("Y-m-d",strtotime($request->fecha_inicio));
+      $fecha_final2 =  date("Y-m-d",strtotime($request->fechaf_final));
+       //inventarios producto
       
+
 
       $listaInventarios = DB::table('inventarios')
       ->select("inventarios.id as idinventarios", "inventarios.concepto",  "productos.codigo" , "productos.nombre" , "almacen.nombre_almacen"  , "inventarios.cantidad", "inventarios.tipo_movimiento", "inventarios.created_at" )
       ->leftJoin('productos','inventarios.id_producto','productos.codigo')
       ->leftJoin('almacen','inventarios.id_almacen','almacen.id');
 
-    
 
-      if(!empty($producto)){
+        if(!empty($producto)){
+        if($producto == "todos"){
+          $producto == "";
+        }
        $listaInventarios= $listaInventarios->where('inventarios.id_producto', 'like', $producto);
-
-       }
-
-      if(!empty($almacen)){
-       $listaInventarios= $listaInventarios->oreWhere('inventarios.id_almacen', 'like', $almacen);
-
-       }
+       if(!empty($almacen)){
+       $listaInventarios= $listaInventarios->orWhere('inventarios.id_almacen', 'like', $almacen);
+        }
        if(!empty($movimiento)){
        $listaInventarios= $listaInventarios->orWhere('inventarios.tipo_movimiento', 'like', $movimiento);
-
+        }
+        if(!empty($fecha_final)){
+       $listaInventarios= $listaInventarios->orWhereBetween('inventarios.created_at', [$fecha_inicio, $fecha_final2]);
        }
-      if(!empty($fecha_final)){
-       $listaInventarios= $listaInventarios->orWhereBetween('inventarios.created_at', [$fecha_inicio, $fecha_final]);
-
        }
-    
       $listaInventarios= $listaInventarios->orderBy('inventarios.created_at')->paginate(10);
 
 
@@ -83,30 +99,29 @@ class InventariosController extends Controller
       ->leftJoin('materia_primas','inventarios2.id_materiaPrima','materia_primas.codigo')
       ->leftJoin('almacen','inventarios2.id_almacen','almacen.id');
 
-        if(!empty($producto)){
-       $listaInventarios2= $listaInventarios2->where('inventarios2.id_materiaPrima', 'like', $producto);
-
-       }
-
-      if(!empty($almacen)){
-       $listaInventarios2= $listaInventarios2->oreWhere('inventarios2.id_almacen', 'like', $almacen);
-
+        if(!empty($materiaprima)){
+          if($materiaprima == "todos"){
+          $materiaprima == "";
+        }
+       $listaInventarios2= $listaInventarios2->where('inventarios2.id_materiaPrima', 'like', $materiaprima);
+       if(!empty($almacen)){
+       $listaInventarios2= $listaInventarios2->orWhere('inventarios2.id_almacen', 'like', $almacen);
        }
        if(!empty($movimiento)){
        $listaInventarios2= $listaInventarios2->orWhere('inventarios2.tipo_movimiento', 'like', $movimiento);
-
        }
-    //  if(!empty($fecha_final)){
-      // $listaInventarios2= $listaInventarios2->orWhereBetween('inventarios2.created_at', [$fecha_inicio, $fecha_final]);
+       if(!empty($fecha_final)){
+       $listaInventarios2= $listaInventarios2->orWhereBetween('inventarios2.created_at', [$fecha_inicio, $fecha_final2]);
+       }
+      }
 
-      // }
     
      
       $listaInventarios2= $listaInventarios2->orderBy('inventarios2.created_at')->paginate(10);
       
         
 
-      return view('inventarios.index',['listaInventarios'=>$listaInventarios, 'listaInventarios2'=>$listaInventarios2, 'productos'=>$productos, 'almacenes'=>$almacenes, "materia_prima" => $materia_prima ]);
+      return view('inventarios.index',['listaInventarios'=>$listaInventarios, 'listaInventarios2'=>$listaInventarios2, 'productos'=>$productos, 'almacenes'=>$almacenes, "materia_prima" => $materia_prima, "valcheck2"=> $valcheck2, "valcheck"=>$valcheck   ]);
       } else {
 
       return View('sentinel.sessions.login');
@@ -137,18 +152,19 @@ class InventariosController extends Controller
      */
    
     }
-    public function store(Request $request)
+    public function storeInv(Request $request)
     {
         
-         if (Sentry::check()){ 
+         
    if(substr( $request->inputproducto , 0, 2 ) == "Pr"){
     $registro_inventario = new Inventarios();
 
    } else {
     $registro_inventario = new Inventarios2(); //materias primas
+
+
      }
 
-   $registro_inventario = new Inventarios();
     $registro_inventario->concepto = "Hecha desde el panel";
     $registro_inventario->id_materiaPrima = $request->inputproducto;
     if($request->tipo_movimiento == "salida"){
@@ -163,10 +179,8 @@ class InventariosController extends Controller
     $registro_inventario->save();
 
  
-  }
-  echo "hola";
   
-  return redirect("inventarios");
+  return redirect("pedidos");
 
 
 

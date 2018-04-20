@@ -25,8 +25,8 @@
            
  
  <div  class="col-md-12">   
-<label class="radio-inline"><input checked type="radio" id= "radioprod" value= "Prod" name="optradio">Producto</label>
-<label class="radio-inline"><input type="radio" id= "radiomp" value="Mp" name="optradio">Materia prima</label>
+<label class="radio-inline"><input {{$valcheck}} type="radio" id= "radioprod" value= "Prod" name="optradio">Producto</label>
+<label class="radio-inline"><input {{$valcheck2}} type="radio" id= "radiomp" value="Mp" name="optradio">Materia prima</label>
 <br>
  </div>
 
@@ -35,8 +35,10 @@
             <div class="form-group" >
             <div class="col-lg-12">
             <label for="estatus" class="col-lg-10">*Seleccione materia prima</label>
+           
             <select required  type="text" tabindex="1" name="buscarmateriaprima" id= 'buscarmateriaprima' class="form-control select2"  >
             <option value= "">Seleccione una opción</option>
+            <option value= "todos">Todos</option>
            
              @foreach($materia_prima as $r)
             <option value= "{{$r->id}}">MP{{$r->id}} - {{$r->nombre}}</option>
@@ -58,6 +60,7 @@
             <label for="estatus" class="col-lg-10">*Seleccione producto</label>
             <select required type="text" tabindex="1" name="buscarproducto" id= 'buscarproducto' class="form-control select2"  >
             <option value= "">Seleccione una opción</option>
+            <option value= "todos">Todos</option>
             @foreach($productos as $r)
             <option value= "{{$r->id}}">Prod{{$r->id}} - {{$r->nombre}}</option>
             @endforeach
@@ -163,8 +166,8 @@
             </tr>
           </thead>
           <tbody>
-            <?php if (count($listaInventarios2) > 0): ?>
-          <?php  $cantidad_total = 0; foreach ($listaInventarios2 as $row): ?>
+            <?php $cantidad_total = 0; if (count($listaInventarios2) > 0): ?>
+          <?php   foreach ($listaInventarios2 as $row): ?>
             <tr>
     					<td style = "width:5%;">{{$row->idinventarios}}</td>
     					<td style = "width:5%;">{{$row->codigo}}</td>
@@ -378,8 +381,19 @@
 
 <script type="text/javascript">
   
+if($("#radioprod").is(":checked") == true ){
 $("#divmp").hide();
 $("#tableMp").hide();
+
+
+}
+
+if($("#radiomp").is(":checked") == true ){
+$("#divprod").hide();
+$("#tableprod").hide();
+
+  
+}
 
 $("#buscarmateriaprima").attr("disabled", "disabled");
 
