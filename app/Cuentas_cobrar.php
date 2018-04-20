@@ -6,6 +6,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class Cuentas_cobrar extends Model
 {
+   protected $table = 'Cuentas_cobrar';
     protected $fillable = [
     'id_cobrar',
     'id_ordencompra',

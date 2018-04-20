@@ -215,7 +215,7 @@ class InventariosController extends Controller
 
  
   
-  return redirect("pedidos");
+  return redirect("inventarios");
 
 
 

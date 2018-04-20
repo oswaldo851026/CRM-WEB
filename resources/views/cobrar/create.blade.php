@@ -23,7 +23,7 @@
 
 
 	<br>
- <form action= "{{url('cobrar') }}" method= "post" enctype="multipart/form-data">
+ <form action= "{{url('cuentasPorCobrar') }}" method= "post" enctype="multipart/form-data">
 	 <input type="hidden" name="_token" value="{{ csrf_token() }}">
 	<div class="row">
   <input type="hidden"  name="idusuario" id= '{{$idusuario}}' class="form-control" value= "1">

@@ -9,6 +9,8 @@ use App\Detalle_pedido;
 use App\Productos;
 use App\Inventarios;
 use App\Inventarios2;
+
+use App\Cuentas_pagar;
 use Sentry;
 use Illuminate\Support\Facades\Input;
 use Illuminate\Support\Facades\DB;
@@ -129,7 +131,18 @@ class PedidosController extends Controller
      $pedidos->total = $request->total;
 
      if($pedidos->save()){
-     
+
+/*
+      if( $request->metodo_pago == "Credito"){
+
+       $cobrar = new Cuentas_pagar();
+       $cobrar->id_pedido =  $pedidos->id;
+       $cobrar->id_cliente =  $pedidos->id_cliente;
+       $cobrar->estatus =  "Pendiente por cobro";
+       $cobrar->monto=  $pedidos->total;
+       $cobrar->save();
+      }
+ */    
       if(sizeof($request->idproducto)>0){
       $this->insertarDetallePedidos($request, $pedidos->id, 1, $request->estatus);
       }
