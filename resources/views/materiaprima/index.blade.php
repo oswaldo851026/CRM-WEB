@@ -41,7 +41,7 @@
             <thead>
             <tr>
 			      <th>id</th>
-            <th>codigo</th>
+   
             <th>nombre</th>
             <th>categoria</th>
             <th>descripcion</th>
@@ -54,7 +54,7 @@
             <?php if (count($materiaprima) > 0): ?>
           <?php foreach ($materiaprima as $row): ?>
             <tr>
-    					<td style = "width:10%;">MP{{$row->id}}</td>
+    			
     					<td style = "width:10%;">{{$row->codigo}}</td>
     					<td style = "width:10%;">{{$row->nombre}}</td>
     					<td style = "width:10%;">{{$row->nombrecategoria}}</td>

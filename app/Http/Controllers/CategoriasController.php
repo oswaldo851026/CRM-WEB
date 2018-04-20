@@ -19,6 +19,7 @@ class CategoriasController extends Controller
     public function index(Request $request)
     {
       if (Sentry::check()){ 
+      $idperfil = Sentry::getUser()->id_perfil;
       $busqueda= $request->input('search');
       $listaCategorias = DB::table('categorias')
       ->select("categorias.id as idcategorias","categorias.*");
@@ -32,8 +33,9 @@ class CategoriasController extends Controller
       }
       
       $listaCategorias= $listaCategorias->orderBy('id')->paginate(10);
-
+      if($idperfil == 1) {
       return view('categorias.index',['listaCategorias'=>$listaCategorias]);
+      }
       } else {
 
       return View('sentinel.sessions.login');
@@ -50,11 +52,13 @@ class CategoriasController extends Controller
     public function create()
     {
      if (Sentry::check()){ 
+     $idperfil = Sentry::getUser()->id_perfil;
      $idusuario = Sentry::getUser()->id;
      $categorias = DB::table('categorias')->get();
      $proveedores = DB::table('proveedores')->get();
+      if($idperfil == 1) {
      return view('categorias.create',['categorias'=>$categorias, 'proveedores'=>$proveedores, 'idusuario'=>$idusuario]);
-
+     } 
      } else {
 
         return View('sentinel.sessions.login');
@@ -94,10 +98,12 @@ class CategoriasController extends Controller
     public function show($id)
     {
      if (Sentry::check()){ 
+    $idperfil = Sentry::getUser()->id_perfil;
      $idusuario = Sentry::getUser()->id;
      $categorias = Categorias::find($id);
-
+     if($idperfil == 1) {
      return view('categorias.view',['categorias'=>$categorias, "idusuario" => $idusuario]);
+      }
 
      } else {
 
@@ -117,11 +123,13 @@ class CategoriasController extends Controller
     {
    
      if (Sentry::check()){ 
+      $idperfil = Sentry::getUser()->id_perfil;
      $idusuario = Sentry::getUser()->id;
      $categorias = Categorias::find($id);
-
+ 
+     if($idperfil <> 1) {
      return view('categorias.edit',['categorias'=>$categorias, "idusuario" => $idusuario]);
-
+    }
      } else {
 
         return View('sentinel.sessions.login');
@@ -163,6 +171,8 @@ class CategoriasController extends Controller
      */
     public function destroy($id)
     {
+      $idperfil = Sentry::getUser()->id_perfil;
+       if($idperfil == 1) {
       $categorias = Categorias::findOrFail($id);
      if ($categorias->delete()) {
         return redirect("categorias")->with(['mensaje_eliminarProspecto', 'Una categoria ha sido eliminada']);
@@ -171,6 +181,6 @@ class CategoriasController extends Controller
       return redirect("categorias")->with('mensaje_eliminarProspecto2', 'La categoria no pudo ser eliminada');
     }
 
-
+       }
     }
 }

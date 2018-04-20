@@ -58,7 +58,7 @@
           <?php foreach ($listaProductos as $row): ?>
             <tr>
     					<td style = "width:10%;">Prod{{$row->idproductos}}</td>
-    					<td style = "width:10%;">{{$row->codigo}}</td>
+    					<td style = "width:10%;"><img width="70px"  src="{{url('img/productos/'.$row->imagen_principal)}}"></td>
     					<td style = "width:10%;">{{$row->nombre}}</td>
     					<td style = "width:10%;">{{$row->nombrecategoria}}</td>
     					<td style = "width:10%;">{{$row->descripcion}}</td>

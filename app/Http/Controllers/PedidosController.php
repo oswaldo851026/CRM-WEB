@@ -7,6 +7,8 @@ use App\Clientes;
 use App\User;
 use App\Detalle_pedido;
 use App\Productos;
+use App\Inventarios;
+use App\Inventarios2;
 use Sentry;
 use Illuminate\Support\Facades\Input;
 use Illuminate\Support\Facades\DB;
@@ -180,20 +182,29 @@ class PedidosController extends Controller
 
     public function actualizarExistencias($idpedido, $cantidad, $idproducto, $tipo){
     
-   if($tipo == 1){
+    $codigo= "Prod".$idproducto;
     $info_producto =  DB::table('productos')->where("id", $idproducto)->first();
 
     $existencia_producto = $info_producto->existencias;
 
      if($existencia_producto >  $cantidad) {  
 
-    $estatus_anterior  = 
-
 
     $actualizar_existencia =  $existencia_producto - $cantidad;
     Productos::where("id", $idproducto)->update(['existencias' => $actualizar_existencia ]);
+       
+     $array_mercancias =  Inventarios::select("cantidad", "id_producto" )->where("id_producto", $codigo)->orderBy("created_at");
+
+    $registro_inventario = new Inventarios();
+    $registro_inventario->concepto = "Registro hecho mediante pedido";
+    $registro_inventario->id_producto= "Prod".$idproducto;
+    $registro_inventario->cantidad = $cantidad - ($cantidad *2);
+    $registro_inventario->id_almacen = 1;
+    $registro_inventario->tipo_movimiento= "salida";
+    $registro_inventario->save();
+
     } 
-    }
+   
 
    if($tipo == 2){
 
@@ -211,9 +222,25 @@ class PedidosController extends Controller
      * @param  \App\Pedidos  $pedidos
      * @return \Illuminate\Http\Response
      */
-    public function show(Pedidos $pedidos)
+    public function show($idpedido)
     {
-        //
+          $pedidos = Pedidos::find($idpedido);
+      $detalle_pedidos = Detalle_pedido::where("id_pedido", $idpedido)->get();
+
+       if (Sentry::check()){ 
+        $idusuario = Sentry::getUser()->id;
+        $idperfil = Sentry::getUser()->id_perfil; 
+        $lista_usuarios =  DB::table('users')->get();
+        
+       $clientes = Clientes::all();
+        $productos = productos::all();
+        return view('pedidos.view',['idusuario'=>$idusuario, 'idperfil' => $idperfil, 'lista_usuarios' => $lista_usuarios, 'clientes'=>$clientes, "productos"=> $productos, "pedidos"=>$pedidos, "detalle_pedidos" => $detalle_pedidos]);
+       } else {
+
+        return View('sentinel.sessions.login');
+
+       }
+
     }
 
     /**

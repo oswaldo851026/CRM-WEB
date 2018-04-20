@@ -24,7 +24,7 @@ class ProveedoresController extends Controller
       ->select("proveedores.id as idproveedores", "proveedores.*");
 
       if(!empty($busqueda)) { 
-      $listaProductos= $listaProductos->Where('proveedores.nombre_contacto', 'like', $busqueda)
+      $listaProveedores= $listaProveedores->Where('proveedores.nombre_contacto', 'like', $busqueda)
       ->orWhere('proveedores.direccion', 'like', $busqueda)
       ->orWhere('proveedores.razon_social', 'like', $busqueda)
       ->orWhere('proveedores.telefono', 'like', $busqueda)

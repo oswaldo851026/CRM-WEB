@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Inventarios;
+use App\Inventarios2;
 use Illuminate\Http\Request;
 use App\Pedidos;
 use App\Clientes;
@@ -34,28 +35,54 @@ class InventariosController extends Controller
         $almacenes = Almacen::all();
          $materia_prima = Materia_Prima::all();
       $busqueda= $request->input('search');
+
+
+      $movimiento= $request->input('movimiento');  
+      $producto= $request->input('busquedaproducto');  
+      $almacen = $request->input('almacen');  
       $fecha_inicio = $request->input('fecha_inicio');
       $fecha_final =  $request->input('fecha_final');  
       $idusuario = Sentry::getUser()->id;
       $idperfil = Sentry::getUser()->id_perfil; 
+      //inventarios producto
+      
+
       $listaInventarios = DB::table('inventarios')
-      ->select("inventarios.id as idinventarios", "inventarios.concepto",  "productos.nombre" , "productos.codigo", "almacen.nombre_almacen"  , "inventarios.cantidad", "inventarios.tipo_movimiento", "inventarios.descripcion" )
-      ->leftJoin('productos','inventarios.id_producto','productos.id')
+      ->select("inventarios.id as idinventarios", "inventarios.concepto",  "productos.codigo" , "productos.nombre" , "almacen.nombre_almacen"  , "inventarios.cantidad", "inventarios.tipo_movimiento", "inventarios.created_at" )
+      ->leftJoin('productos','inventarios.id_producto','productos.codigo')
       ->leftJoin('almacen','inventarios.id_almacen','almacen.id');
-      if(!empty($busqueda)) { 
-      $listaInventarios= $listaInventarios->where('productos.nombre', 'like', $busqueda)
-      ->orWhere('inventarios.concepto', 'like', $busqueda)
-      ->orWhere('productos.nombre', 'like', $busqueda)
-      ->orWhere('almacen.nombre_almacen', 'like', $busqueda);
-      }
-      if(!empty($fecha_inicio) && !empty($fecha_final)) { 
-      $listaInventarios= $listaInventarios->orWhereBetween('created_at', [$fecha_inicio, $fecha_final]);
 
-      }
+    
+
+
+    if($radio = "Mp"){
+    
+
+    }
+
+    if($radio = "Prod"){
+
+      
+    }
+
+      
              
-      $listaInventarios= $listaInventarios->orderBy('id')->paginate(10);
+      $listaInventarios= $listaInventarios->orderBy('inventarios.created_at')->paginate(10);
 
-      return view('inventarios.index',['listaInventarios'=>$listaInventarios, 'productos'=>$productos, 'almacenes'=>$almacenes, "materia_prima" => $materia_prima ]);
+
+
+
+      //Inventario materia prima 
+      $listaInventarios2 = DB::table('inventarios2')
+      ->select("inventarios2.id as idinventarios", "inventarios2.concepto",  "materia_primas.codigo" , "materia_primas.nombre" , "almacen.nombre_almacen"  , "inventarios2.cantidad", "inventarios2.tipo_movimiento", "inventarios2.created_at" )
+      ->leftJoin('materia_primas','inventarios2.id_materiaPrima','materia_primas.codigo')
+      ->leftJoin('almacen','inventarios2.id_almacen','almacen.id');
+     
+      $listaInventarios2= $listaInventarios2->orderBy('inventarios2.created_at')->paginate(10);
+      
+        
+
+      return view('inventarios.index',['listaInventarios'=>$listaInventarios, 'listaInventarios2'=>$listaInventarios2, 'productos'=>$productos, 'almacenes'=>$almacenes, "materia_prima" => $materia_prima ]);
       } else {
 
       return View('sentinel.sessions.login');
@@ -64,15 +91,19 @@ class InventariosController extends Controller
 
     }
 
+
+
+
+
     /**
      * Show the form for creating a new resource.
      *
      * @return \Illuminate\Http\Response
      */
-    public function create()
+    public function create(Request $request)
     {
-        //
-    }
+        
+   
 
     /**
      * Store a newly created resource in storage.
@@ -80,9 +111,41 @@ class InventariosController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
+   
+    }
     public function store(Request $request)
     {
-        //
+        
+         if (Sentry::check()){ 
+   if(substr( $request->inputproducto , 0, 2 ) == "Pr"){
+    $registro_inventario = new Inventarios();
+
+   } else {
+    $registro_inventario = new Inventarios2(); //materias primas
+     }
+
+   $registro_inventario = new Inventarios();
+    $registro_inventario->concepto = "Hecha desde el panel";
+    $registro_inventario->id_materiaPrima = $request->inputproducto;
+    if($request->tipo_movimiento == "salida"){
+      $registro_inventario->cantidad = $request->inputcantidad  - ($request->inputcantidad *2);
+    }else{
+
+      $registro_inventario->cantidad = $request->inputcantidad;
+    }
+    
+    $registro_inventario->id_almacen = $request->inputalmacen;
+    $registro_inventario->tipo_movimiento= $request->tipo_movimiento;
+    $registro_inventario->save();
+
+ 
+  }
+  echo "hola";
+  
+  return redirect("inventarios");
+
+
+
     }
 
     /**

@@ -10,6 +10,8 @@ use App\Almacen;
 use App\Clientes;
 use App\Productos;
 use App\Materia_prima;
+use App\Inventarios;
+use App\Inventarios2;
 use DB;
 use Sentry;
 use Illuminate\Http\Request;
@@ -126,7 +128,7 @@ class OrdenesCompraController extends Controller
      if($pedidos->save()){
      
       if(sizeof($request->idproducto)>0){
-      $this->insertarDetalleOrdenesCompra($request, $pedidos->id, 1);
+      $this->insertarDetalleOrdenesCompra($request, $pedidos->id, 1, $request->estatus);
       }
       //$this->actualizarExistencias($request,  $pedidos->id);
 
@@ -141,7 +143,7 @@ class OrdenesCompraController extends Controller
 
     }
 
-    public function insertarDetalleOrdenesCompra(Request $request, $idpedido,  $tipo){ 
+    public function insertarDetalleOrdenesCompra(Request $request, $idpedido,  $tipo, $estatus, $estatus_anterior = false){ 
 
     foreach($request->idproducto as $idproducto){
     $detalle_ordenesCompra = new detalle_ordenesCompra();
@@ -158,6 +160,12 @@ class OrdenesCompraController extends Controller
     $detalle_ordenesCompra->precio_producto = $precio;
     $importe = $cantidad * $precio;
     $detalle_ordenesCompra->importe = $importe;
+   
+    if($estatus == "enAlmacen" && $estatus_anterior <> "enAlmacen" ){
+           
+    $this->actualizarExistencias($idpedido, $cantidad, $idproducto, $tipo, $request->id_almacen);
+    }
+     
     $detalle_ordenesCompra->save();
 
     }
@@ -165,7 +173,32 @@ class OrdenesCompraController extends Controller
 
     }
 
-    public function actualizarExistencias(Request $request, $idpedido){
+    public function actualizarExistencias($idpedido, $cantidad, $idproducto, $tipo, $id_almacen){
+
+
+    $info_materiasPrimas=  DB::table('materia_primas')->where("id", $idproducto)->first();
+
+    $existencia_materiasPrimas = $info_materiasPrimas->existencias;
+
+    $actualizar_existencia =  $existencia_materiasPrimas + $cantidad;
+    Materia_prima::where("id", $idproducto)->update(['existencias' => $actualizar_existencia ]);
+
+    $registro_inventario = new Inventarios2();
+    $registro_inventario->concepto = "Registro hecho mediante orden de compra";
+    $registro_inventario->id_materiaPrima = "MP".$idproducto;
+    $registro_inventario->cantidad = $cantidad;
+    $registro_inventario->id_almacen = $id_almacen;
+    $registro_inventario->tipo_movimiento= "entrada";
+    $registro_inventario->save();
+
+
+    
+ 
+
+
+
+
+
 
 
     }

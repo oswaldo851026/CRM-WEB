@@ -48,8 +48,8 @@
 			
 			<div class="form-group" >
 			<div class="col-lg-12">
-			<label for="precio" class="col-lg-10">Precio</label>
-			<input type="number" tabindex="5" name="precio" id= 'precio' value="{{$producto->precio}}" class="form-control" placeholder="precio" > <br/>
+			<label for="precio" class="col-lg-10">*Precio</label>
+			<input required type="number" tabindex="5" name="precio" id= 'precio' value="{{$producto->precio}}" class="form-control" placeholder="precio" > <br/>
 			</div>
 			</div>
 			<div class="form-group" >
@@ -76,8 +76,9 @@
 			<label for="proveedor" class="col-lg-10">Proveedor</label>
 			<select type="text" tabindex="4" name="id_proveedor"  id= 'id_proveedor' class="form-control"  >
             <option value= "">Eliga una opción</option>
-            <?php  $selected = ""; ?>
+          
             @foreach ($proveedores as $row)
+            <?php  $selected = ""; ?>
             <?php if($producto->id_proveedor == $row->id) {$selected = "selected";} ?>
 		    <option {{$selected}} value= "{{$row->id}}">{{$row->razon_social}}</option>
 		    @endforeach
@@ -88,7 +89,7 @@
 	 <div class="form-group" >
 			<div class="col-lg-12">
 			<label for="categoria" class="col-lg-10">Categoria</label>
-			<select type="text" tabindex="6" name="id_proveedor" id= 'id_categoria' class="form-control"  >
+			<select type="text" tabindex="6" name="id_categoria" id= 'id_categoria' class="form-control"  >
             <option value= "">Eliga una opción</option>
          
             @foreach ($categorias as $row)

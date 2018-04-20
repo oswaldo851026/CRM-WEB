@@ -25,6 +25,7 @@
     </script>
 </head>
 <body>
+<?php $idperfil = Sentry::getUser()->id_perfil; ?> 
     <div id="app">
         <nav class="navbar navbar-inverse navbar-static-top">
             <div class="container">
@@ -51,16 +52,22 @@
           Activos <b class="caret"></b>
         </a>
         <ul class="dropdown-menu">
+          @if($idperfil == 1 || $idperfil == 5  || $idperfil == 2 )        <!-- solo admin, ventas, compras -->
           <li><a class="dropdown-item"  href="{{ url('productos') }}">Productos</a></li>
           <li class="divider"></li>
+          @endif 
+          @if($idperfil == 1 || $idperfil == 3  || $idperfil == 2 )   <!-- solo admin, produccion, compras -->
           <li><a class="dropdown-item" href="{{ url('materiaprima') }}">Materia primas</a></li>
           <li class="divider"></li>
+          @endif 
+          @if($idperfil == 1)  <!-- solo admin -->
           <li><a class="dropdown-item" href="{{ url('categorias ') }}">Categorias</a></li>
-          
+          @endif 
           
         </ul>
       </li>
   </li>
+  @if($idperfil == 1 )  <!-- solo admin -->
    <li class="dropdown">
         <a href="#" class="dropdown-toggle" data-toggle="dropdown">
           Usuarios <b class="caret"></b>
@@ -73,6 +80,9 @@
           
         </ul>
       </li>
+   @endif 
+
+    @if($idperfil == 1 || $idperfil == 5 || $idperfil == 4)  <!-- solo admin, vents y finanzas -->
      <li class="dropdown">
         <a href="#" class="dropdown-toggle" data-toggle="dropdown">
           Ventas <b class="caret"></b>
@@ -85,25 +95,35 @@
           
         </ul>
       </li>
+   @endif 
+  @if($idperfil == 1 || $idperfil == 5)  <!-- solo admin, ventas-->
   <li><a href="{{ url('clientes') }}">Clientes</a></li>
+  @endif
+
+ @if($idperfil == 1 || $idperfil == 2)  <!-- solo admin, compras-->
   <li><a href="{{ url('proveedores') }}">Proveedores</a></li>
       {{--    <li class="nav-item dropdown">
   </li> --}}
+  @endif
+     
 
+ @if($idperfil == 1 || $idperfil == 3 || $idperfil == 2) <!-- solo admin, compras, produccion  p-->
      <li class="dropdown">
         <a href="#" class="dropdown-toggle" data-toggle="dropdown">
           Inventarios <b class="caret"></b>
         </a>
         <ul class="dropdown-menu">
           <li><a href="{{ url('inventarios') }}">Inventarios</a></li>
-          <li  class="divider"></li>
-          <li><a  class="dropdown-item" href="{{ url('inventarios/create') }}">Registrar movimientos</a></li>
+         
           <li class="divider"></li>
           <li><a class="dropdown-item" href="{{ url('almacenes') }}">Almacenes</a></li>
           
           
         </ul>
       </li>
+ @endif
+
+@if($idperfil == 1 || $idperfil == 3) <!-- solo admin y produccion -->
    <li class="dropdown">
         <a href="#" class="dropdown-toggle" data-toggle="dropdown">
           Producción <b class="caret"></b>
@@ -118,9 +138,11 @@
           
         </ul>
       </li> 
-  
+@endif
 
 
+
+@if($idperfil == 1 || $idperfil == 2) <!-- solo admin y compras -->
     <li class="dropdown">
         <a href="#" class="dropdown-toggle" data-toggle="dropdown">
           Compras <b class="caret"></b>
@@ -134,7 +156,7 @@
         </ul>
       </li>
 
-
+@endif
                     </ul>
 
                     <!-- Right Side Of Navbar -->

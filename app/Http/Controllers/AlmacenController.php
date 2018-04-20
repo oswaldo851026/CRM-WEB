@@ -80,9 +80,9 @@ class AlmacenController extends Controller
 
     if($almacen->save()){
           session()->flash('crearAlmacen', "Un Almacen ha sido creado");
-          return redirect("almacen");
+          return redirect("almacenes");
       }else{
-          return view('almacen.create',["almacen"=>$almacen]);
+          return view('almacenes.create',["almacen"=>$almacen]);
       }
     }
 

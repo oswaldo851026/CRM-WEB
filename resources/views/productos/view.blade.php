@@ -4,6 +4,7 @@
 
 <head>
 <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+<script src="<?= env('APP_URL'); ?>/js/jquery-3.3.1.js" type="text/javascript"></script>
 </head>
 @extends('layouts.app')
 
@@ -30,31 +31,31 @@
   <input type="hidden"  name="idusuario" id= '{{$idusuario}}' class="form-control" value= "1">
 		
 <!--Primera columna -->
-		<div class="col-xs-6">
+	<div class="col-xs-6">
 			<div class="form-group" >
 			<div class="col-lg-12">
 			<label for="nombre" class="col-lg-10">*Nombre del producto</label>
-			<input  readonly type="text" tabindex="1" name="nombre" id= 'nombre' class="form-control" placeholder="Primer nombre" required> <br/>
+			<input type="text" tabindex="1" name="nombre" id= 'nombre' value="{{$producto->nombre}}" class="form-control" placeholder="Primer nombre" required> <br/>
 			</div>
 			</div>
 			
 			<div class="form-group" >
 			<div class="col-lg-12">
 			<label for="descripcion" class="col-lg-10">Descripción</label>
-			<input readonly type="text" tabindex="3" name="descripcion" id= 'descripcion' class="form-control" placeholder="Descripcion" > <br/>
+			<input type="text" tabindex="3" name="descripcion" value="{{$producto->codigo}}" id= 'descripcion' class="form-control" placeholder="Descripcion" > <br/>
 			</div>
 			</div>
 			
 			<div class="form-group" >
 			<div class="col-lg-12">
 			<label for="precio" class="col-lg-10">Precio</label>
-			<input readonly type="number" tabindex="5" name="precio" id= 'precio' class="form-control" placeholder="precio" > <br/>
+			<input type="number" tabindex="5" name="precio" id= 'precio' value="{{$producto->precio}}" class="form-control" placeholder="precio" > <br/>
 			</div>
 			</div>
 			<div class="form-group" >
 			<div class="col-lg-12">
 			<label for="notas" class="col-lg-10">Código de barras</label>
-			<input readonly type="codigo_barras" tabindex="9" name="codigo_barras" id= 'codigo_barras' class="form-control" placeholder="código de barras" > <br/>
+			<input type="codigo_barras" tabindex="9" name="codigo_barras"  value="{{$producto->codigo_barras}}"id= 'codigo_barras' class="form-control" placeholder="código de barras" > <br/>
 			</div>
 		</div>
 		</div>
@@ -67,17 +68,19 @@
       <div class="form-group" >
 			<div class="col-lg-12">
 			<label for="codigo" class="col-lg-10">*codigo</label>
-			<input readonly type="text" tabindex="2" name="codigo" id= 'email' class="form-control" placeholder="codigo" required> <br/>
+			<input type="text" tabindex="2" name="codigo" value="{{$producto->codigo}}" id= 'email' class="form-control" placeholder="codigo" required> <br/>
 			</div>
 			</div>
      <div class="form-group" >
 			<div class="col-lg-12">
 			<label for="proveedor" class="col-lg-10">Proveedor</label>
-			<select disabled type="text" tabindex="4" name="id_proveedor" id= 'id_proveedor' class="form-control"  >
+			<select type="text" tabindex="4" name="id_proveedor"  id= 'id_proveedor' class="form-control"  >
             <option value= "">Eliga una opción</option>
+            <?php  $selected = ""; ?>
             @foreach ($proveedores as $row)
-		    <option value= {{$row->id}}>{{$row->razon_social}}</option>
-		      @endforeach
+            <?php if($producto->id_proveedor == $row->id) {$selected = "selected";} ?>
+		    <option {{$selected}} value= "{{$row->id}}">{{$row->razon_social}}</option>
+		    @endforeach
 			</select> <br/>
 			</div>
 	</div>
@@ -85,10 +88,12 @@
 	 <div class="form-group" >
 			<div class="col-lg-12">
 			<label for="categoria" class="col-lg-10">Categoria</label>
-			<select disabled type="text" tabindex="6" name="id_proveedor" id= 'id_categoria' class="form-control"  >
+			<select type="text" tabindex="6" name="id_proveedor" id= 'id_categoria' class="form-control"  >
             <option value= "">Eliga una opción</option>
+         
             @foreach ($categorias as $row)
-		    <option value= {{$row->id}}>{{$row->nombre}}</option>
+            <?php $selected = ""; if($producto->id_categoria == $row->id) {$selected = "selected";} ?>
+		    <option {{$selected}} value= "{{$row->id}}">{{$row->nombre}}</option>
 		      @endforeach
 			</select> <br/>
 			</div>
@@ -96,7 +101,7 @@
          <div class="form-group" >
 			<div class="col-lg-12">
 			<label for="existencias" class="col-lg-10">Existencias</label>
-			<input readonly type="text" readonly value= "0" tabindex="8" name="existencias" id= 'existencias' class="form-control" placeholder="" > <br/>
+			<input type="text" readonly value= "{{$producto->existencias}}" tabindex="8" name="existencias" id= 'existencias' class="form-control" placeholder="" > <br/>
 			</div>
 			</div>
 
@@ -108,8 +113,8 @@
    <div class="col-xs-8">
 	 <div class="form-group" >
 	 <div class="col-lg-12">
-	 <label for="comentarios" class="col-lg-10">Comentarios</label>
-	 <textarea readonly class="form-control" rows="5" type="text" tabindex="7" name="comentarios" id= 'comentarios'> </textarea> <br/>
+	 <label for="comentarios" value= "{{$producto->comentarios}}" class="col-lg-10">Comentarios</label>
+	 <textarea class="form-control" rows="5" type="text" tabindex="7" name="comentarios" id= 'comentarios'>{{$producto->comentarios}} </textarea> <br/>
 	 </div>
     </div>
 	</div>
@@ -118,10 +123,11 @@
 	 <div class="form-group" >
 	 <div class="col-lg-12">
 	 <label for="comentarios" class="col-lg-10">Imagen del producto</label>
-	  @if(!empty($producto->imagen_principal))
+	 @if(!empty($producto->imagen_principal))
 	 <img width="200px"  src= "{{env('APP_URL')}}/img/productos/{{$producto->imagen_principal}}" > 
 	 @endif
-	 <br/>
+
+	 <input type="file" class="form-control" type="text" tabindex="8" name="imagen_principal" id= 'imagen_principal'>  <br/>
 	 </div>
     </div>
 	</div>
@@ -141,5 +147,17 @@
 </div>
 </div>
 </div>
+
+
+
 </body>
 @endsection
+
+<script type="text/javascript">
+
+
+$(document).ready(function() {
+$("input, select").attr("readonly", "readonly");
+});
+
+</script>
