@@ -9,7 +9,7 @@ use Sentry;
 use Categorias;
 use Proveedores;
 use Illuminate\Support\Facades\Input;
-
+header("Access-Control-Allow-Origin: *");
 
 class ProductosController extends Controller
 {
@@ -200,4 +200,36 @@ class ProductosController extends Controller
 
 
     }
+
+
+    public function listaProductosM(Request $request)
+    {
+ 
+      //$idusuario = Sentry::getUser()->id;
+     // $idperfil = Sentry::getUser()->id_perfil; 
+      $busqueda= $request->input('search');
+      $listaProductos = DB::table('productos')
+      ->select("productos.id as idproductos", "productos.*", "productos.existencias", "proveedores.razon_social as nombreproveedor", "categorias.nombre as nombrecategoria")
+      ->leftJoin('categorias','productos.id_categoria','categorias.id')
+      ->leftJoin('proveedores','productos.id_proveedor','proveedores.id');
+      if(!empty($busqueda)) { 
+      $listaProductos= $listaProductos->where('productos.nombre', 'like', $busqueda)
+      ->orWhere('productos.codigo', 'like', $busqueda)
+      ->orWhere('productos.descripcion', 'like', $busqueda)
+      ->orWhere('productos.id', 'like', $busqueda);
+      }
+      $listaProductos= $listaProductos->orderBy('id')->get();
+
+      return response()->json($listaProductos);  
+
+    }
+
+
+
+
+
+
+
+
+
 }

@@ -51,7 +51,7 @@ class PedidosController extends Controller
 
       }
              
-      $listaPedidos= $listaPedidos->orderBy('id')->paginate(10);
+      $listaPedidos= $listaPedidos->orderBy('created_at', "desc")->paginate(10);
 
       return view('pedidos.index',['listaPedidos'=>$listaPedidos]);
       } else {
